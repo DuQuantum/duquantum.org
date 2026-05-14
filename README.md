@@ -36,15 +36,6 @@ npm run build
 npm start
 ```
 
-## Deployment
-
-This site is configured for Netlify deployment:
-
-1. Push your code to a git repository
-2. Connect the repo to Netlify
-3. Build command: `npm run build`
-4. Publish directory: `.next`
-
 ## API Endpoints
 
 - `GET /api/hello` - Test endpoint
@@ -56,5 +47,6 @@ This site is configured for Netlify deployment:
 ├── app/              # Next.js App Router
 ├── netlify/          # Netlify Functions
 ├── public/           # Static files
+├── styles/           # CSS style sheets
 └── components/       # React components
 ```

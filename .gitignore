@@ -12,6 +12,7 @@ out/
 build/
 dist/
 .swc/
+next-env.d.ts
 
 # Package manager lock files
 pnpm-lock.yaml
