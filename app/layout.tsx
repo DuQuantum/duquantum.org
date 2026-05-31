@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "Hackathon",
-  description: "Join our amazing hackathon event",
+  title: "DuQuantum",
+  description: "quantum computing hackathon at Duke University",
 };
 
 export default function RootLayout({
