@@ -4,6 +4,9 @@ import "@/styles/globals.css";
 export const metadata: Metadata = {
   title: "DuQuantum",
   description: "quantum computing hackathon at Duke University",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
