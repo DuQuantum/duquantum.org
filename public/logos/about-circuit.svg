@@ -1,0 +1,22 @@
+<svg width="583" height="141" viewBox="0 0 583 141" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="AboutSection">
+<g id="ApplicationText">
+<g id="circuitApplication">
+<rect id="Rectangle 15" y="115" width="51" height="4" fill="white"/>
+<rect id="Rectangle 17" x="28" y="62" width="23" height="4" fill="white"/>
+<rect id="Rectangle 18" width="69" height="4" transform="matrix(-1 0 0 1 186 62)" fill="white"/>
+<rect id="Rectangle 23" width="74" height="4" transform="matrix(-1 0 0 1 583 62)" fill="white"/>
+<rect id="Rectangle 19" width="65" height="4" transform="matrix(0 -1 -1 0 186 66)" fill="white"/>
+<rect id="Rectangle 20" width="84" height="4" transform="matrix(1 0 0 -1 150 17)" fill="white"/>
+<rect id="Rectangle 21" width="374" height="4" transform="matrix(1 0 0 -1 150 17)" fill="white"/>
+<rect id="Rectangle 16" x="53" y="43" width="62" height="96" stroke="white" stroke-width="4"/>
+<circle id="Ellipse 6" cx="184" cy="15" r="13" stroke="white" stroke-width="4"/>
+<path id="U" d="M70.1491 74.496H76.3891V95.088C76.3891 96.816 76.5971 98.272 77.0131 99.456C77.4611 100.608 78.1651 101.488 79.1251 102.096C80.1171 102.672 81.4131 102.96 83.0131 102.96C84.6131 102.96 85.8931 102.672 86.8531 102.096C87.8131 101.488 88.5171 100.608 88.9651 99.456C89.4131 98.272 89.6371 96.816 89.6371 95.088V74.496H95.8291V94.272C95.8291 97.536 95.3971 100.24 94.5331 102.384C93.7011 104.496 92.3411 106.064 90.4531 107.088C88.5971 108.08 86.1011 108.576 82.9651 108.576C79.8291 108.576 77.3171 108.08 75.4291 107.088C73.5731 106.064 72.2291 104.496 71.3971 102.384C70.5651 100.24 70.1491 97.536 70.1491 94.272V74.496Z" fill="white"/>
+<circle id="Ellipse 7" cx="184" cy="64" r="6" fill="white"/>
+<rect id="Rectangle 22" x="526" y="13" width="65" height="4" transform="rotate(90 526 13)" fill="white"/>
+<circle id="Ellipse 8" cx="15" cy="15" r="13" transform="matrix(1 0 0 -1 509 79)" stroke="white" stroke-width="4"/>
+<circle id="Ellipse 9" cx="6" cy="6" r="6" transform="matrix(1 0 0 -1 518 21)" fill="white"/>
+</g>
+</g>
+</g>
+</svg>

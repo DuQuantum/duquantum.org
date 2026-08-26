@@ -1,3 +1,65 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+ * Design tokens
+ *
+ * Names mirror the Figma variables exactly (`base/purple`, `gateSize`, ...) so
+ * a future `get_variable_defs` sync maps 1:1 onto this file. Nothing in the
+ * components should hardcode a colour or type size -- go through the Tailwind
+ * theme, which resolves to these.
+ *
+ * Colours are space-separated RGB channels so Tailwind opacity modifiers keep
+ * working (e.g. `bg-base-teal/20`).
+ * ------------------------------------------------------------------------- */
+
+@layer base {
+  :root {
+    /* Palette */
+    --base-purple: 51 26 92; /* #331A5C */
+    --base-teal: 27 227 217; /* #1BE3D9 */
+    --base-white: 255 255 255; /* #FFFFFF */
+    --base-blue: 47 105 232; /* #2F69E8 */
+    --base-cyan: 37 166 224; /* #25A6E0 -- mid stop of the apply-button gradient */
+
+    /* Type scale */
+    --gate-size: 56px;
+    --gate-small-size: 48px;
+    --section-header-size: 40px;
+    --section-body-size: 24px;
+    --section-caption-size: 18px;
+    --display-size: 75px;
+
+    /*
+     * Layout. Figma's StandardContentWidth is the *content* column: 877px, from
+     * x=281.33 to x=1158.33 on the 1440 artboard. --container-max adds the gutter
+     * on top so the padding doesn't eat into that column, which means every
+     * section is exactly 877 wide at >= 925px viewport -- and that is why the
+     * sections can position their decorations with Figma's own px offsets.
+     */
+    --content-width: 877px;
+    --container-pad: 1.5rem;
+    --container-max: calc(var(--content-width) + 2 * var(--container-pad));
+    --section-height: 900px;
+  }
+
+  body {
+    @apply bg-base-purple text-base-white font-sans antialiased;
+  }
+
+  ::selection {
+    @apply bg-base-teal text-base-purple;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

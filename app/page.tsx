@@ -1,16 +1,21 @@
-import Image from "next/image";
+import TopBar from "@/components/sections/TopBar";
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import Organizers from "@/components/sections/Organizers";
+import Faq from "@/components/sections/Faq";
+import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
-    <main className="w-full">
-      <Image
-        src="/placeholders/placeholder.svg"
-        alt="DuQuantum"
-        width={1920}
-        height={3800}
-        className="w-full h-auto"
-        priority
-      />
-    </main>
+    <>
+      <TopBar />
+      <main>
+        <Hero />
+        <About />
+        <Organizers />
+        <Faq />
+      </main>
+      <Footer />
+    </>
   );
 }

@@ -4,7 +4,7 @@ Website for the DuQuantum quantum computing hackathon at Duke.
 
 ## Features
 
-- **Next.js 14** - React framework with App Router
+- **Next.js 16** - React framework with App Router
 - **Tailwind CSS** - Utility-first CSS framework
 - **Netlify Functions** - Serverless backend
 - **TypeScript** - Type-safe development
@@ -45,8 +45,12 @@ npm start
 
 ```
 ├── app/              # Next.js App Router
+├── components/
+│   ├── ui/           # Primitives (Container, Section, Button)
+│   └── sections/     # Page sections, one per Figma frame
+├── content/          # Typed content + event config
+├── lib/              # Small helpers
 ├── netlify/          # Netlify Functions
 ├── public/           # Static files
-├── styles/           # CSS style sheets
-└── components/       # React components
+└── styles/           # Design tokens + Tailwind entrypoint
 ```
