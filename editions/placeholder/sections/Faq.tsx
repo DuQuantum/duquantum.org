@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Container from "@/components/ui/Container";
-import SectionLabel from "@/components/ui/SectionLabel";
-import { site } from "@/content/site";
+import Container from "../ui/Container";
+import SectionLabel from "../ui/SectionLabel";
+import { site } from "../content";
 
 /**
  * Figma: FAQSection (65:1082), 1440x900.
@@ -33,7 +33,7 @@ export default function Faq() {
             aria-hidden
           >
             <Image
-              src="/logos/faq-laser.svg"
+              src="/editions/placeholder/logos/faq-laser.svg"
               alt=""
               width={261}
               height={204}
@@ -67,7 +67,7 @@ export default function Faq() {
           {[0, 1, 2, 3].map((i) => (
             <div key={i} className="relative size-[147px]">
               <Image
-                src="/logos/pfp-white-small.svg"
+                src="/editions/placeholder/logos/pfp-white-small.svg"
                 alt=""
                 width={165}
                 height={155}

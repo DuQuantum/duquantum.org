@@ -3,12 +3,25 @@
 @tailwind utilities;
 
 /* ---------------------------------------------------------------------------
- * Design tokens
+ * The placeholder edition's stylesheet -- the only one the site loads.
+ *
+ * The @tailwind directives live here rather than in a shared globals.css
+ * because Tailwind resolves @layer per file: base rules can only be layered
+ * alongside the directives that declare the layers. Each edition therefore
+ * ships its whole stylesheet, which is also what lets one edition restyle
+ * `body` (or drop Tailwind entirely) without touching any other.
+ *
+ * Design tokens for the placeholder edition.
  *
  * Names mirror the Figma variables exactly (`base/purple`, `gateSize`, ...) so
  * a future `get_variable_defs` sync maps 1:1 onto this file. Nothing in the
  * components should hardcode a colour or type size -- go through the Tailwind
  * theme, which resolves to these.
+ *
+ * This file is edition-owned: tailwind.config.ts declares the token *names*,
+ * this declares their *values*. Only the active edition's theme is loaded, so
+ * a later edition can give every one of these a different value on :root
+ * without touching, or being touched by, the placeholder.
  *
  * Colours are space-separated RGB channels so Tailwind opacity modifiers keep
  * working (e.g. `bg-base-teal/20`).
@@ -41,7 +54,6 @@
     --content-width: 877px;
     --container-pad: 1.5rem;
     --container-max: calc(var(--content-width) + 2 * var(--container-pad));
-    --section-height: 900px;
   }
 
   body {

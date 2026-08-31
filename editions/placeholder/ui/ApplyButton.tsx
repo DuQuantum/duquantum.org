@@ -1,5 +1,5 @@
 import { cn } from "@/lib/cn";
-import { site } from "@/content/site";
+import { site } from "../content";
 
 /**
  * Figma component `applyButton` (235x91): a gradient plate, a purple inset, then

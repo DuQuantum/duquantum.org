@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import ApplyButton from "@/components/ui/ApplyButton";
+import ApplyButton from "../ui/ApplyButton";
 import { cn } from "@/lib/cn";
 
 /**

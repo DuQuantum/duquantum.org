@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Container from "@/components/ui/Container";
-import { site } from "@/content/site";
+import Container from "../ui/Container";
+import { site } from "../content";
 
 /**
  * Figma: HeroSection (2:100), 1440x900. The logo is exported as one SVG rather
@@ -37,7 +37,7 @@ export default function Hero() {
 
       <Container>
         <Image
-          src="/logos/circuit-logo.svg"
+          src="/editions/placeholder/logos/circuit-logo.svg"
           alt={`${site.name} 2026`}
           width={877}
           height={281}

@@ -1,9 +1,9 @@
 import Image from "next/image";
 import ExternalLink from "@/components/ui/ExternalLink";
-import Container from "@/components/ui/Container";
-import SectionLabel from "@/components/ui/SectionLabel";
-import ApplyButton from "@/components/ui/ApplyButton";
-import { site } from "@/content/site";
+import Container from "../ui/Container";
+import SectionLabel from "../ui/SectionLabel";
+import ApplyButton from "../ui/ApplyButton";
+import { site } from "../content";
 
 /**
  * Figma: AboutSection (5:18), 1440x900 -- two blocks on one artboard.
@@ -39,7 +39,7 @@ export default function About() {
         {/* ApplicationText (14:389) */}
         <div className="relative">
           <Image
-            src="/logos/about-circuit.svg"
+            src="/editions/placeholder/logos/about-circuit.svg"
             alt=""
             width={583}
             height={141}
@@ -66,7 +66,7 @@ export default function About() {
         {/* AboutText (14:388) */}
         <div className="relative mt-[86px]">
           <Image
-            src="/logos/color-code.svg"
+            src="/editions/placeholder/logos/color-code.svg"
             alt=""
             width={223}
             height={217}
@@ -117,7 +117,7 @@ export default function About() {
             className="mt-10 size-[143px] rounded-full lg:absolute lg:left-0 lg:top-[348px] lg:mt-0"
           >
             <Image
-              src="/logos/qiskit-fall-fest.png"
+              src="/editions/placeholder/logos/qiskit-fall-fest.png"
               alt=""
               width={143}
               height={143}

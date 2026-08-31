@@ -1,39 +1,12 @@
-import type { Metadata } from "next";
-import { IBM_Plex_Sans } from "next/font/google";
-import { site } from "@/content/site";
-import "@/styles/globals.css";
+import edition from "@/editions/active";
 
-/** Figma type styles are set in IBM Plex Sans (Regular / Medium / SemiBold / Bold Italic). */
-const sans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-sans",
-});
+/**
+ * The shell. It holds no content, no styling and no design of its own --
+ * everything visible comes from whichever edition editions/active.ts points at,
+ * including the stylesheet (pulled in by that import) and the font.
+ */
 
-export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title: {
-    default: `${site.name} — ${site.tagline}`,
-    template: `%s — ${site.name}`,
-  },
-  description: site.description,
-  alternates: { canonical: "/" },
-  icons: { icon: "/favicon.svg" },
-  openGraph: {
-    type: "website",
-    url: site.url,
-    siteName: site.name,
-    title: `${site.name} — ${site.tagline}`,
-    description: site.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${site.name} — ${site.tagline}`,
-    description: site.description,
-  },
-};
+export const metadata = edition.metadata;
 
 export default function RootLayout({
   children,
@@ -41,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={sans.variable}>
+    <html lang="en" className={edition.fontClassName}>
       <body>{children}</body>
     </html>
   );

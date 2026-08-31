@@ -1,7 +1,7 @@
-import Container from "@/components/ui/Container";
-import SectionLabel from "@/components/ui/SectionLabel";
-import OrganizerCard from "@/components/ui/OrganizerCard";
-import { organizers } from "@/content/organizers";
+import Container from "../ui/Container";
+import SectionLabel from "../ui/SectionLabel";
+import OrganizerCard from "../ui/OrganizerCard";
+import { organizers } from "../content";
 
 /**
  * Figma: OrganizersSection (14:382), 1440x900. Not to be confused with the

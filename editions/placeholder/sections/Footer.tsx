@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Container from "@/components/ui/Container";
+import Container from "../ui/Container";
 import ExternalLink from "@/components/ui/ExternalLink";
-import { site } from "@/content/site";
+import { site } from "../content";
 
 /**
  * Figma: FooterSection (65:1160), 1440x900.
@@ -37,7 +37,7 @@ export default function Footer() {
             className="shrink-0 rounded-full"
           >
             <Image
-              src="/logos/duqis-logo.png"
+              src="/editions/placeholder/logos/duqis-logo.png"
               alt=""
               width={214}
               height={214}
@@ -46,7 +46,7 @@ export default function Footer() {
           </ExternalLink>
 
           <Image
-            src="/logos/org-cross.svg"
+            src="/editions/placeholder/logos/org-cross.svg"
             alt=""
             width={55}
             height={55}
@@ -56,7 +56,7 @@ export default function Footer() {
 
           <ExternalLink href={site.hackDukeUrl} label="HackDuke" className="shrink-0">
             <Image
-              src="/logos/hackduke-logo.svg"
+              src="/editions/placeholder/logos/hackduke-logo.svg"
               alt=""
               width={230}
               height={136}

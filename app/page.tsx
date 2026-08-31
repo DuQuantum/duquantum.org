@@ -1,21 +1,4 @@
-import TopBar from "@/components/sections/TopBar";
-import Hero from "@/components/sections/Hero";
-import About from "@/components/sections/About";
-import Organizers from "@/components/sections/Organizers";
-import Faq from "@/components/sections/Faq";
-import Footer from "@/components/sections/Footer";
+import edition from "@/editions/active";
 
-export default function Home() {
-  return (
-    <>
-      <TopBar />
-      <main>
-        <Hero />
-        <About />
-        <Organizers />
-        <Faq />
-      </main>
-      <Footer />
-    </>
-  );
-}
+/** "/" renders the active edition's page. See editions/active.ts. */
+export default edition.Page;

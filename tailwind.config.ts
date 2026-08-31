@@ -1,9 +1,13 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Every value resolves to a CSS custom property in styles/globals.css, which
- * mirrors the Figma variable set. Re-syncing the design means editing tokens
- * there, not this file.
+ * Every value resolves to a CSS custom property declared by the active edition's
+ * theme.css. This file is the shared *name* layer; the values are per-edition,
+ * which is what lets two editions use `bg-base-purple` and get different purples.
+ *
+ * Because it is shared, treat it as APPEND-ONLY across editions: a new edition
+ * may add entries, but changing or repurposing an existing name reaches back
+ * into every frozen edition that uses it. See editions/README.md.
  */
 const rgb = (token: string) => `rgb(var(${token}) / <alpha-value>)`;
 
@@ -11,7 +15,7 @@ const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./content/**/*.{js,ts,jsx,tsx,mdx}",
+    "./editions/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -40,12 +44,6 @@ const config: Config = {
       },
       maxWidth: {
         container: "var(--container-max)",
-      },
-      height: {
-        section: "var(--section-height)",
-      },
-      minHeight: {
-        section: "var(--section-height)",
       },
       fontFamily: {
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
