@@ -54,6 +54,34 @@
     --content-width: 877px;
     --container-pad: 1.5rem;
     --container-max: calc(var(--content-width) + 2 * var(--container-pad));
+
+    /*
+     * MLH trust badge. Width and inset are MLH's own (width 10%, min 60, max
+     * 100, 50px from the right edge); the inset and gap shrink below lg because
+     * a 50px gutter on a 375px screen pushes TopBar's apply button into the H
+     * gate. The badge is a hanging banner -- 392.79x688 -- so at its 100px max
+     * it runs 175px down the page, well past the apply button's row.
+     *
+     * --mlh-safe is the whole band the badge claims at the right edge, gap
+     * included. It is declared here rather than in TopBar because two
+     * components read it: ui/MlhBadge.tsx to place itself, and
+     * sections/TopBar.tsx to stay out of the way.
+     */
+    --mlh-badge-right: 0.5rem;
+    --mlh-badge-width: clamp(60px, 10vw, 100px);
+    --mlh-badge-gap: 0.5rem;
+    --mlh-safe: calc(
+      var(--mlh-badge-right) + var(--mlh-badge-width) + var(--mlh-badge-gap)
+    );
+  }
+
+  /* lg -- room for MLH's own 50px inset. Matches TopBar's own lg breakpoint,
+     which is where the bar switches to its full 1440 artboard layout. */
+  @media (min-width: 1024px) {
+    :root {
+      --mlh-badge-right: 50px;
+      --mlh-badge-gap: 1.5rem;
+    }
   }
 
   body {

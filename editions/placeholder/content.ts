@@ -20,6 +20,7 @@ export type SiteConfig = {
   hackDukeUrl: string;
   applicationUrl: string;
   qiskitFallFestUrl: string;
+  mlhUrl: string;
 };
 
 /**
@@ -52,6 +53,14 @@ export const site = {
   hackDukeUrl: "https://hackduke.org/",
   applicationUrl: "https://duke.is/duquantum-application-2026",
   qiskitFallFestUrl: "https://www.ibm.com/quantum/blog/qiskit-fall-fest-2026",
+
+  /**
+   * Destination of the MLH trust badge (ui/MlhBadge.tsx), copied verbatim from
+   * the snippet MLH supplies -- the utm_* parameters are how they attribute the
+   * referral, so they are part of the obligation and not decoration.
+   */
+  mlhUrl:
+    "https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=white",
 } as const satisfies SiteConfig;
 
 /**

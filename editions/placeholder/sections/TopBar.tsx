@@ -28,6 +28,20 @@ import { cn } from "@/lib/cn";
  * error scales with w, so the 56px rings visibly slid right of their 6px
  * crosshairs on any viewport under 1440.
  *
+ * The apply button and the wire that drops into it are the one column that is
+ * NOT fixed to its Figma percentage. The MLH trust badge (ui/MlhBadge.tsx) is
+ * fixed to the viewport's top-right corner and hangs 175px down, straight
+ * through the button's row, so the column is placed at `--apply-x`:
+ * `min(83.889%, <the badge's left edge, less half a button>)`. Figma's position
+ * wins wherever there is room for it -- roughly 1590px and up -- and the column
+ * slides left only as far as the badge actually forces it. Everything on that
+ * column reads the same variable, so the wire stays welded to the button.
+ *
+ * The conversion through `--bar-overhang` is because the two are anchored to
+ * different things: the badge to the viewport, this column to a 1440-capped
+ * centred bar. Past 1440 the bar stops growing and its right edge retreats
+ * inward, which is room the button gets to keep.
+ *
  * The wire is split around the H gate (Figma: 0->84 and 159->1440) rather than
  * drawn continuous behind a filled gate, since a transparent bar has no
  * background colour to mask it with. Both segments hang off `--gate-x` so the
@@ -105,7 +119,18 @@ export default function TopBar() {
         visible ? "translate-y-0" : "-translate-y-full",
       )}
     >
-      <div className="relative mx-auto h-[110px] w-full max-w-[1440px] [--gate-x:1.5rem] lg:h-[245px] lg:[--gate-x:5.833%]">
+      <div
+        className={cn(
+          "relative mx-auto h-[110px] w-full max-w-[1440px] lg:h-[245px]",
+          "[--gate-x:1.5rem] lg:[--gate-x:5.833%]",
+          // 117.5px is half the apply button's 235px width -- it is placed by
+          // its centre, so that is how far its right edge sits past --apply-x.
+          "[--apply-x:83.889%]",
+          "lg:[--bar-overhang:max(0px,(100vw_-_1440px)_*_0.5)]",
+          "lg:[--mlh-safe-inner:max(0px,var(--mlh-safe)_-_var(--bar-overhang))]",
+          "lg:[--apply-x:min(83.889%,calc(100%_-_117.5px_-_var(--mlh-safe-inner)))]",
+        )}
+      >
         {/* the wire, split around the H gate and bled past both screen edges */}
         <div className="absolute -left-[100vw] top-[52px] h-1.5 w-[calc(100vw+var(--gate-x))] bg-base-teal lg:top-[42px]" />
         <div className="absolute -right-[100vw] left-[calc(var(--gate-x)+75px)] top-[52px] h-1.5 bg-base-teal lg:top-[42px]" />
@@ -133,9 +158,10 @@ export default function TopBar() {
           <div className="absolute left-[68.403%] top-[-18px] h-[67px] w-1.5 -translate-x-1/2 bg-base-white" />
           <div className="absolute left-[68.403%] top-[37px] size-[18px] -translate-x-1/2 rounded-full bg-base-white" />
 
-          {/* wire dropping down into the apply button (1208) */}
-          <div className="absolute left-[83.889%] top-[35px] size-[18px] -translate-x-1/2 rounded-full bg-base-teal" />
-          <div className="absolute left-[83.889%] top-[48px] h-[27px] w-1.5 -translate-x-1/2 bg-base-teal" />
+          {/* wire dropping down into the apply button (1208), pinned to the
+              same --apply-x as the button so the two move together */}
+          <div className="absolute left-[var(--apply-x)] top-[35px] size-[18px] -translate-x-1/2 rounded-full bg-base-teal" />
+          <div className="absolute left-[var(--apply-x)] top-[48px] h-[27px] w-1.5 -translate-x-1/2 bg-base-teal" />
         </div>
 
         {/* Centred on the same column as the stub above, so the wire always lands
@@ -143,8 +169,12 @@ export default function TopBar() {
             size where it was before the component shrank 285x110 -> 235x91. */}
         <ApplyButton
           className={cn(
-            "absolute right-6 top-1/2 origin-right -translate-y-1/2 scale-[0.667]",
-            "lg:left-[83.889%] lg:right-auto lg:top-[74px] lg:-translate-x-1/2 lg:translate-y-0 lg:scale-100",
+            "absolute right-[var(--mlh-safe)] top-1/2 origin-right -translate-y-1/2 scale-[0.667]",
+            // Below ~340px the badge's band, this button and the H gate stop
+            // fitting side by side: at 320 the button's left edge lands 12px
+            // inside the gate. One more step down buys back 16px.
+            "max-[340px]:scale-[0.55]",
+            "lg:left-[var(--apply-x)] lg:right-auto lg:top-[74px] lg:-translate-x-1/2 lg:translate-y-0 lg:scale-100",
             visible ? "pointer-events-auto" : "pointer-events-none",
           )}
         />
