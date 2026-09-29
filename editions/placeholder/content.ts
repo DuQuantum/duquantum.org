@@ -126,6 +126,30 @@ export const organizers = [
     photo: "/editions/placeholder/organizers/mohammad.jpg",
     link: "https://www.linkedin.com/in/mohammad-zoraiz/",
   },
+  {
+    name: "Bohan Lu",
+    role: "Challenge Advisor",
+    org: "PhD Student, DQC",
+    photo: "/editions/placeholder/organizers/bohan.jpg",
+  },
+  {
+    name: "Ravi Kumar",
+    role: "Challenge Advisor",
+    org: "PhD Student, DQC",
+    photo: "/editions/placeholder/organizers/ravi.jpg",
+  },
+  {
+    name: "Bahaa Harraz",
+    role: "Challenge Advisor",
+    org: "PhD Student, DQC",
+    photo: "/editions/placeholder/organizers/bahaa.jpg",
+  },
+  {
+    name: "Sujay Kazi",
+    role: "Challenge Advisor",
+    org: "PhD Student, DQC",
+    photo: "/editions/placeholder/organizers/sujay.jpg",
+  },
 ] as const satisfies readonly Organizer[];
 
 export type Sponsor = {
