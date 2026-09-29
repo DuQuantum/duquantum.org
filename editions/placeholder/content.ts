@@ -127,3 +127,95 @@ export const organizers = [
     link: "https://www.linkedin.com/in/mohammad-zoraiz/",
   },
 ] as const satisfies readonly Organizer[];
+
+export type Sponsor = {
+  name: string;
+  /**
+   * Trimmed to the mark's own bounding box and capped at 720px on the long
+   * edge. Trimming is what makes these comparable: untouched, IQM's mark
+   * occupied 70% of a 2697px canvas while others were flush to the edge, so
+   * `object-contain` rendered the same logo at wildly different sizes.
+   */
+  logo: string;
+  url: string;
+  /**
+   * The artwork's own background, for marks that are not designed for a white
+   * plate. Classiq's wordmark is lime on near-black and vanishes on white, so
+   * its plate field is painted to match the artwork instead. A brand's colour
+   * is the sponsor's, not ours -- it belongs here as data rather than in
+   * theme.css as a design token.
+   */
+  background?: string;
+};
+
+/**
+ * Order is the layout: the grid fills left to right, three to a row, so this
+ * array reads exactly as the wall does -- rows of three, then the last two.
+ * Reordering here is the whole operation; nothing in the section is positional.
+ */
+export const sponsors = [
+  // row 1
+  {
+    name: "Alice & Bob",
+    logo: "/editions/placeholder/logos/sponsors/alice-and-bob.png",
+    url: "https://alice-bob.com/",
+  },
+  {
+    name: "Pasqal",
+    logo: "/editions/placeholder/logos/sponsors/pasqal.png",
+    url: "https://www.pasqal.com/",
+  },
+  {
+    name: "Google Quantum AI",
+    logo: "/editions/placeholder/logos/sponsors/google-quantum-ai.png",
+    url: "https://quantumai.google/",
+  },
+
+  // row 2
+  {
+    name: "Classiq",
+    logo: "/editions/placeholder/logos/sponsors/classiq.png",
+    url: "https://www.classiq.io/",
+    background: "#191919",
+  },
+  {
+    name: "BlueQubit",
+    logo: "/editions/placeholder/logos/sponsors/bluequbit.png",
+    url: "https://www.bluequbit.io/",
+  },
+  {
+    name: "IQM",
+    logo: "/editions/placeholder/logos/sponsors/iqm.png",
+    url: "https://www.meetiqm.com/",
+  },
+
+  // row 3
+  {
+    name: "Duke Quantum Center",
+    logo: "/editions/placeholder/logos/sponsors/duke-quantum-center.png",
+    url: "https://quantum.duke.edu/",
+    background: "#222D66",
+  },
+  {
+    name: "Quandela",
+    logo: "/editions/placeholder/logos/sponsors/quandela.png",
+    url: "https://www.quandela.com/",
+  },
+  {
+    name: "NEQXT",
+    logo: "/editions/placeholder/logos/sponsors/neqxt.png",
+    url: "https://www.neqxt.org/",
+  },
+
+  // row 4 -- two plates, centred by the wrap
+  {
+    name: "Rhodes Information Initiative at Duke",
+    logo: "/editions/placeholder/logos/sponsors/rhodes-iid.png",
+    url: "https://iid.duke.edu/",
+  },
+  {
+    name: "Duke Department of Physics",
+    logo: "/editions/placeholder/logos/sponsors/duke-physics.png",
+    url: "https://physics.duke.edu/",
+  },
+] as const satisfies readonly Sponsor[];

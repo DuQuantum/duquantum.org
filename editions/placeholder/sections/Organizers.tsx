@@ -5,8 +5,8 @@ import { organizers } from "../content";
 
 /**
  * Figma: OrganizersSection (14:382), 1440x900. Not to be confused with the
- * separate SponsorSection (60:898) that now sits above it on the artboard --
- * that one is deliberately not built yet.
+ * separate SponsorSection (60:898) that sits above it on the artboard -- that
+ * one is its own section, see sections/Sponsors.tsx.
  *
  * Heading block (14:563) y=107..186, with a second short rule (Rectangle 15,
  * 110 wide) squared off against the right edge of the column. Cards sit on a

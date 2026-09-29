@@ -20,12 +20,17 @@ export default function SectionLabel({
   children: React.ReactNode;
   ruleWidth: number;
   gap?: number;
-  align?: "left" | "right";
+  align?: "left" | "right" | "center";
   className?: string;
 }) {
   return (
     <div
-      className={cn("flex flex-col", align === "right" && "items-end", className)}
+      className={cn(
+        "flex flex-col",
+        align === "right" && "items-end",
+        align === "center" && "items-center text-center",
+        className,
+      )}
     >
       <div
         className="h-1.5 max-w-full bg-base-teal"
