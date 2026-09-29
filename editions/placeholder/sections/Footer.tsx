@@ -14,19 +14,41 @@ import { site } from "../content";
  * The gaps either side of the crossed circle are not equal in Figma (12 left, 28
  * right), so they are set explicitly rather than with one `gap`.
  *
- * Content ends at y=408 but the artboard runs to 900, leaving ~492px of empty
- * purple below. That is reproduced here because it is what the design says, but
- * it is very likely just the artboard height carried over from the other
- * sections -- drop `lg:pb-[492px]` to something smaller if so.
+ * The row of four `pfpWhiteSmall` marks at the top (y=107) used to sit in the
+ * FAQ section and moved here when that section was rebuilt around the
+ * accordion. They are decoration, hence `aria-hidden`.
+ *
+ * Content now ends at y=756 of the 900 artboard, so the trailing space below is
+ * 144px rather than the ~492px this footer carried when it began at y=368.
  */
 export default function Footer() {
   return (
     <footer
       id="contact"
-      className="bg-base-purple pb-[80px] pt-[20px] lg:pb-[492px]"
+      className="bg-base-purple pb-[80px] pt-[60px] lg:pb-[144px] lg:pt-[107px]"
     >
       <Container>
-        <p className="mx-auto max-w-[716px] text-center text-section-header font-medium leading-[1.3] tracking-[1.2px]">
+        {/* pfpWhiteSmall row (y=107). The mark's stroke bleeds 9px wide and 4px
+            tall past the 147 node box, so the asset is 165x155 and is nudged
+            back by that much inside a box kept at Figma's 147. */}
+        <div
+          className="grid grid-cols-2 justify-items-center gap-y-10 sm:grid-cols-4 lg:gap-x-[95px]"
+          aria-hidden
+        >
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="relative size-[147px]">
+              <Image
+                src="/editions/placeholder/logos/pfp-white-small.svg"
+                alt=""
+                width={165}
+                height={155}
+                className="absolute -left-[9px] -top-[4px] max-w-none"
+              />
+            </div>
+          ))}
+        </div>
+
+        <p className="mx-auto mt-[60px] max-w-[716px] text-center text-section-header font-medium leading-[1.3] tracking-[1.2px] lg:mt-[114px]">
           contact us at <span className="font-bold">{site.email}</span>
         </p>
 

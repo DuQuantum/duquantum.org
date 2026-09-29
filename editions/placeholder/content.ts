@@ -219,3 +219,136 @@ export const sponsors = [
     url: "https://physics.duke.edu/",
   },
 ] as const satisfies readonly Sponsor[];
+
+/**
+ *
+ * An answer is a list of segments rather than one string, which is what lets it
+ * carry a link while staying plain data: a bare string is a run of text, an
+ * object is a link. Nothing here is markup, so this file stays the event's
+ * facts and a future edition can render the same shape however it likes.
+ *
+ * Add entries by appending to the array. 
+ */
+export type AnswerSegment =
+  | string
+  | {
+      text: string;
+      href: string;
+      /**
+       * What the link announces, when the visible text does not describe the
+       * destination on its own -- "here" tells a screen-reader user nothing
+       * out of context. Leave it off when `text` already names the target.
+       */
+      label?: string;
+    };
+
+export type FaqEntry = {
+  question: string;
+  answer: readonly AnswerSegment[];
+  /**
+   * Anchor for linking straight to one question (`/#travel-stipends`).
+   * Optional: it falls back to a slug of the question, which is fine until the
+   * question gets reworded and every link already shared breaks. Set it
+   * explicitly on anything you have posted publicly.
+   */
+  id?: string;
+};
+
+export const faq = [
+  {
+    id: "location",
+    question: "Where will the hackathon take place?",
+    answer: [
+      "DuQuantum 2026 will take place in-person on the campus of Duke University in Durham, North Carolina, in particular the Wilkinson Building (534 Research Dr, Durham, NC, USA, 27705).",
+    ],
+  },
+  {
+    id: "dates",
+    question: "When will the hackathon happen?",
+    answer: [
+      "DuQuantum 2026 will run Saturday, October 24 - Sunday, October 25. Check-in begins 9 AM on Saturday, hacking begins at 11:30 AM on Saturday and ends at 11:30 AM on Sunday, and the closing ceremony ends at 4:30 PM on Sunday.",
+    ],
+  },
+  {
+    id: "virtual",
+    question: "Can I attend DuQuantum virtually?",
+    answer: ["No. DuQuantum 2026 is an in-person only event."],
+  },
+  {
+    id: "travel-stipends",
+    question: "Can I be reimbursed for travel?",
+    answer: [
+      "DuQuantum offers travel stipends to participants who are (1) traveling from outside the greater Triangle area, i.e. outside a 40-mile radius from Durham, North Carolina, and (2) traveling from within the United States. We are unfortunately unable to provide stipends to international travelers. Participants may apply for travel stipends using the form sent out by organizers@duquantum.org; these are due October 5. Applications are reviewed and approved on a case-by-case basis.",
+    ],
+  },
+  {
+    id: "stipend-process",
+    question: "How do travel stipends work?",
+    answer: [
+      "Travel stipends are provided via reimbursement after the event, contingent on whether the participant shows up and checks in. If you have been approved to receive a travel stipend, we will contact you with further instructions and requests. Expect to provide ID, itemized receipts, confirmation of attendance, etc, via the PaymentWorks online service (more details to come). We expect to fully reimburse costs up to $75, and partially reimburse a significant portion of additional costs.",
+    ],
+  },
+  {
+    id: "non-travel-expenses",
+    question:
+      "Can non-travel expenses be reimbursed, e.g. lodging and local transportation (e.g. Uber)?",
+    answer: [
+      "Unfortunately, we are not able to offer stipends for non-travel expenses (and expenses for localized travel). However, we may be able to obtain discounted rates at nearby hotels for those who may be interested in booking a room at their own expense (this is not guaranteed). Note that meals will be provided at no cost throughout the duration of the event.",
+    ],
+  },
+  {
+    id: "what-to-bring",
+    question: "What should I bring?",
+    answer: [
+      "Bring your laptop, chargers, any necessary cables, and personal items you might need over the 24-hours of hacking and surrounding activities. If you plan to spend the night in the Wilkinson Building, you are encouraged to bring your own sleeping supplies, e.g. a sleeping bag. Note the building gets quite cold at night.",
+    ],
+  },
+  {
+    id: "eligibility",
+    question: "Who is eligible to participate in DuQuantum?",
+    answer: [
+      "All currently-enrolled undergraduate, Master’s, and PhD students are eligible to attend, provided that they are above 18 years of age by October 24, 2026.",
+    ],
+  },
+  {
+    id: "cost",
+    question: "Do I have to pay to participate in DuQuantum?",
+    answer: [
+      "No! Participation in DuQuantum 2026 is completely free, modulo usual living and partial travel costs. Meals will be provided throughout the duration of the event as well.",
+    ],
+  },
+  {
+    id: "beginners",
+    question: "What if I know nothing about quantum computing?",
+    answer: [
+      "Beginners to quantum computing are particularly welcome to attend and compete in the Introductory Track challenges, which are designed to be accessible and educational, and are judged disjointly from their Standard Track counterparts. Organizers will provide a plethora of introductory resources, so you can familiarize yourself with basic concepts. An introductory workshop will also occur early on Saturday, October 24, to get you started on your project!",
+    ],
+  },
+  {
+    id: "teams",
+    question: "Who can I work with?",
+    answer: [
+      "Participants can work in teams of up to 4. You may also work solo, though we highly recommend working in a team so you can get to know your fellow hackers! Accepted participants may use the #team-finding channel in the DuQuantum 2026 Discord to find additional teammates. Teammate preferences are due via form (send out by organizers@duquantum.org) by October 14, and will be finalized shortly afterward.",
+    ],
+  },
+  {
+    id: "teammate-applications",
+    question: "Do all of my teammates need to complete an application?",
+    answer: [
+      "Yes. All applications are considered for admission on an individual basis. As such, all prospective teammates must fill out an application.",
+    ],
+  },
+  {
+    id: "code-of-conduct",
+    question: "What is the Code of Conduct?",
+    answer: [
+      "The DuQuantum 2026 Participant Code of Conduct can be found in the Hacker Guide, the Discord #announcements channel, and the participant confirmation form. It incorporates the Duke Community Standard, the Qiskit Fall Fest Code of Conduct, and the MLH Code of Conduct ",
+      {
+        text: "here",
+        href: "https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md",
+        label: "MLH Code of Conduct",
+      },
+      ". Participants MUST agree to abide by the Code of Conduct on the confirmation form.",
+    ],
+  },
+] as const satisfies readonly FaqEntry[];

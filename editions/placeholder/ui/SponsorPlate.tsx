@@ -6,11 +6,15 @@ import type { Sponsor } from "../content";
  * Figma components `sponsorLogo` (60:1013) and `sponsorLogoFlat` (65:1033) --
  * two plate sizes on the artboard, one component here.
  *
- * The plate is this edition's nested-ring idiom for the third time: a teal 6px
- * outer, a purple 4px inset, then the field. ApplyButton builds its gradient
- * plate the same way and OrganizerCard rings a headshot with it. Figma draws
- * both borders as strokes on one rect; nesting two bordered boxes reproduces
- * that and keeps the corners square.
+ * The plate is this edition's nested-ring idiom for the third time: a 4px
+ * gradient outer, a purple 4px inset, then the field. It is the same
+ * corner-to-corner teal -> blue sweep ApplyButton paints, and OrganizerCard
+ * rings a headshot with it; 4px is the width of the wires in this section's own
+ * circuit, so the plates and the artwork around them share a stroke.
+ *
+ * The outer ring is padding over a gradient rather than a border, because a
+ * border cannot carry one. Nesting boxes this way also keeps the corners square,
+ * which is what Figma draws.
  *
  * 269x110 for every plate, whatever shape the logo is. 269 is the width the
  * design already uses for every section rule, and three of them plus two 35px
@@ -38,8 +42,8 @@ export default function SponsorPlate({
 }: Sponsor) {
   return (
     <ExternalLink href={url} label={name} className="w-[269px] max-w-full">
-      <span className="block aspect-[269/110] border-6 border-base-teal bg-base-white">
-        <span className="block size-full border-4 border-base-purple">
+      <span className="block aspect-[269/110] bg-gradient-to-br from-base-teal to-base-blue p-1">
+        <span className="block size-full border-4 border-base-purple bg-base-white">
           <span className="relative block size-full" style={{ background }}>
             <Image
               src={logo}
