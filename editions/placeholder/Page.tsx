@@ -2,6 +2,7 @@ import TopBar from "./sections/TopBar";
 import Hero from "./sections/Hero";
 import About from "./sections/About";
 import Sponsors from "./sections/Sponsors";
+import Speakers from "./sections/Speakers";
 import Organizers from "./sections/Organizers";
 import Faq from "./sections/Faq";
 import Footer from "./sections/Footer";
@@ -23,6 +24,7 @@ export default function Page() {
         <Hero />
         <About />
         <Sponsors />
+        <Speakers />
         <Organizers />
         <Faq />
       </main>

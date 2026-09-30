@@ -246,18 +246,25 @@ export const sponsors = [
 
 /**
  *
- * An answer is a list of segments rather than one string, which is what lets it
- * carry a link while staying plain data: a bare string is a run of text, an
- * object is a link. Nothing here is markup, so this file stays the event's
- * facts and a future edition can render the same shape however it likes.
+ * Rich text as data. A run of prose is a list of segments rather than one
+ * string, which is what lets it carry a link or an emphasised phrase while
+ * staying plain data: a bare string is a run of text, an object is a run with
+ * a link, bold, or both. Nothing here is markup, so this file stays the event's
+ * facts and a future edition can render the same shape however it likes --
+ * ui/RichText.tsx is this edition's renderer.
  *
- * Add entries by appending to the array. 
+ * One shape serves both the FAQ answers (which needed links) and the speaker
+ * bios (which need bold), so either can use either treatment for free.
+ *
+ * Add entries by appending to the array.
  */
-export type AnswerSegment =
+export type Segment =
   | string
   | {
       text: string;
-      href: string;
+      /** Emphasised run -- renders as <strong>. */
+      bold?: true;
+      href?: string;
       /**
        * What the link announces, when the visible text does not describe the
        * destination on its own -- "here" tells a screen-reader user nothing
@@ -268,7 +275,7 @@ export type AnswerSegment =
 
 export type FaqEntry = {
   question: string;
-  answer: readonly AnswerSegment[];
+  answer: readonly Segment[];
   /**
    * Anchor for linking straight to one question (`/#travel-stipends`).
    * Optional: it falls back to a slug of the question, which is fine until the
@@ -376,3 +383,91 @@ export const faq = [
     ],
   },
 ] as const satisfies readonly FaqEntry[];
+
+/**
+ * Figma: SpeakersSection (118:294), whose `speakerHeadshot` component (119:392)
+ * is drawn one per artboard. On the page they are slides in a carousel -- see
+ * ui/SpeakerCarousel.tsx -- so this array's length is also the number of dots
+ * in the control. Appending a speaker adds a slide and a dot, nothing else.
+ *
+ * `blurb` is the short line under the name; `bio` is the long right-hand column.
+ * Figma alternates which weight is the base run between cards -- Brown's is
+ * Regular with SemiBold phrases, the others are SemiBold with Regular phrases --
+ * but they render the same, so all four are written here as plain text with
+ * `bold` on the emphasised phrases.
+ */
+export type Speaker = {
+  name: string;
+  photo: string;
+  /** Centred under the name -- Figma's sub-description. */
+  blurb: string;
+  /** What they are giving: "Opening Keynote", "Plenary Lecture". */
+  session: string;
+  bio: readonly Segment[];
+};
+
+export const speakers = [
+  {
+    name: "Kenneth Brown",
+    photo: "/editions/placeholder/speakers/brown.jpg",
+    blurb:
+      "Michael J. Fitzpatrick Distinguished Professor of Engineering at Duke. Director of the Duke Quantum Center.",
+    session: "Opening Keynote",
+    bio: [
+      { text: "Ken Brown", bold: true },
+      " is ",
+      {
+        text: "Michael J. Fitzpatrick Distinguished Professor of Engineering at Duke",
+        bold: true,
+      },
+      " and ",
+      { text: "Director of the Duke Quantum Center", bold: true },
+      ". He has appointments in Electrical and Computer Engineering, Physics, and Chemistry. His research focuses on quantum computation, with emphasis on quantum error correction, quantum control, quantum computer architecture, ion trap devices, and cold molecular ions. He is a Fellow of the American Physical Society, a Kavli Fellow, an Experienced Research Fellow of the Alexander von Humboldt Foundation, and recipient of the 2020 Stansell Family Distinguished Research Award at Duke.",
+    ],
+  },
+  {
+    name: "Robert Calderbank",
+    photo: "/editions/placeholder/speakers/calderbank.jpg",
+    blurb:
+      "Charles S. Snydor Distinguished Professor of Computer Science at Duke. Member of the Duke Quantum Center.",
+    session: "Closing Keynote and Remarks",
+    bio: [
+      { text: "Robert Calderbank", bold: true },
+      " is ",
+      {
+        text: "Charles S. Snydor Distinguished Professor of Computer Science at Duke,",
+        bold: true,
+      },
+      " with appointments in Mathematics and Electrical and Computer Engineering. He was formerly Vice President for Research at AT&T. His research focuses on coding theory and wireless communication, with pioneering contributions to the theory and practice of voiceband modems, space-time coding (used in 3G, 4G, 5G), and quantum error correction (co-namesake of CSS codes). His inventions can be found in billions of devices today. Dr. Calderbank received the 2013 IEEE Hamming Medal, the 2015 Shannon Award, and the 2026 Marconi Prize. He is a member of the National Academy of Sciences, American Academy of Arts & Sciences, National Academy of Inventors, and National Academy of Engineering, as well as an IEEE Fellow, AAAS Fellow, AT&T Fellow, and AMS Fellow.",
+    ],
+  },
+  {
+    name: "Natalie Klco",
+    photo: "/editions/placeholder/speakers/klco.jpg",
+    blurb:
+      "Assistant Professor of Physics at Duke. Member of the Duke Quantum Center.",
+    session: "Plenary Lecture",
+    bio: [
+      { text: "Natalie Klco", bold: true },
+      " is an ",
+      { text: "Assistant Professor of Physics at Duke", bold: true },
+      " and a member of the Duke Quantum Center. Her research sits at the intersection of quantum information theory, quantum field theory, and high-energy physics, with a particular focus on quantum simulation, entanglement, and lattice gauge theories. She received a 2026 NSF CAREER Award and the 2026 Kenneth G. Wilson Award for pioneering contributions to digital quantum simulations of lattice gauge theories.",
+    ],
+  },
+  {
+    name: "Huanqian Loh",
+    photo: "/editions/placeholder/speakers/loh.jpg",
+    blurb:
+      "Assistant Professor of Electrical and Computer Engineering at Duke. Member of the Duke Quantum Center.",
+    session: "Plenary Lecture",
+    bio: [
+      { text: "Huanqian (Hazel) Loh", bold: true },
+      " is an ",
+      {
+        text: "Assistant Professor of Electrical and Computer Engineering and Physics at Duke",
+        bold: true,
+      },
+      " and a member of the Duke Quantum Center. Her research focuses on the experimental realization of programmable arrays of neutral atoms trapped with optical tweezers for quantum simulation, computation, and sensing, with recent emphasis on far-from-equilibrium quantum dynamics, Hilbert-space fragmentation, and robust quantum systems. She is a 2025 Sloan Research Fellow and has been recognized as a L’Oréal-UNESCO For Women in Science International Rising Talent.",
+    ],
+  },
+] as const satisfies readonly Speaker[];

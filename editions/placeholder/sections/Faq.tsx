@@ -1,9 +1,9 @@
-import { Fragment } from "react";
 import Image from "next/image";
 import Container from "../ui/Container";
 import SectionLabel from "../ui/SectionLabel";
 import FaqItem from "../ui/FaqItem";
-import { faq, site, type AnswerSegment, type FaqEntry } from "../content";
+import RichText from "../ui/RichText";
+import { faq, site, type FaqEntry } from "../content";
 
 /**
  * Figma: FAQSection (65:1082), 1440x900.
@@ -27,9 +27,9 @@ import { faq, site, type AnswerSegment, type FaqEntry } from "../content";
  * how the page starts, and how a reader scanning a long list sees it -- the same
  * pitch would leave 143px of empty purple between one-line questions.
  *
- * Answers are segments from content.ts, assembled here rather than inside the
- * accordion: only the open/close needs to be a client component, so the text and
- * its links stay server-rendered.
+ * Answers are segments from content.ts, rendered by ui/RichText.tsx here rather
+ * than inside the accordion: only the open/close needs to be a client component,
+ * so the text and its links stay server-rendered.
  */
 
 /** Fallback anchor when an entry does not pin its own `id`. */
@@ -38,40 +38,6 @@ function slug(question: string) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
-}
-
-function Answer({ segments }: { segments: readonly AnswerSegment[] }) {
-  return (
-    <>
-      {segments.map((segment, i) => {
-        if (typeof segment === "string") {
-          return <Fragment key={i}>{segment}</Fragment>;
-        }
-
-        // Same test as ApplyButton: a mailto: should not spawn a tab, and
-        // saying "opens in a new tab" about one would be a lie.
-        const external = /^https?:/.test(segment.href);
-        // `label` covers link text that is meaningless out of context -- a
-        // screen reader listing the page's links reads "here" as just "here".
-        const name = segment.label ?? segment.text;
-
-        return (
-          <a
-            key={i}
-            href={segment.href}
-            target={external ? "_blank" : undefined}
-            rel={external ? "noopener noreferrer" : undefined}
-            aria-label={
-              external ? `${name} (opens in a new tab)` : segment.label
-            }
-            className="underline underline-offset-2 transition-colors hover:text-base-teal focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-base-teal focus-visible:ring-offset-2 focus-visible:ring-offset-base-purple"
-          >
-            {segment.text}
-          </a>
-        );
-      })}
-    </>
-  );
 }
 
 export default function Faq() {
@@ -117,7 +83,7 @@ export default function Faq() {
                 id={entry.id ?? slug(entry.question)}
                 question={entry.question}
               >
-                <Answer segments={entry.answer} />
+                <RichText segments={entry.answer} />
               </FaqItem>
             </li>
           ))}
