@@ -46,6 +46,66 @@ function Chevron({ direction }: { direction: "left" | "right" }) {
   );
 }
 
+/** The chevrons-and-dots control, sitting under the track. */
+function Control({
+  labels,
+  active,
+  onSelect,
+  className,
+}: {
+  labels: readonly string[];
+  active: number;
+  onSelect: (index: number) => void;
+  className?: string;
+}) {
+  return (
+    // Centred on the content column, and clear of the track by a fixed gap, so
+    // it holds one position instead of riding each blurb's two-to-four lines.
+    <div
+      className={cn(
+        "flex w-full items-center justify-center gap-[6px]",
+        className,
+      )}
+    >
+      <button
+        type="button"
+        onClick={() => onSelect(active - 1)}
+        aria-label="Previous speaker"
+        className={cn("flex items-center justify-center p-1", FOCUS)}
+      >
+        <Chevron direction="left" />
+      </button>
+
+      <div className="flex items-center gap-[6px] px-[6px]">
+        {labels.map((label, i) => (
+          <button
+            key={label}
+            type="button"
+            onClick={() => onSelect(i)}
+            aria-label={`Show ${label}`}
+            aria-current={i === active}
+            className={cn(
+              "relative size-2 rounded-full bg-base-teal transition-opacity",
+              "before:absolute before:-inset-2 before:content-['']",
+              i === active ? "opacity-100" : "opacity-50",
+              FOCUS,
+            )}
+          />
+        ))}
+      </div>
+
+      <button
+        type="button"
+        onClick={() => onSelect(active + 1)}
+        aria-label="Next speaker"
+        className={cn("flex items-center justify-center p-1", FOCUS)}
+      >
+        <Chevron direction="right" />
+      </button>
+    </div>
+  );
+}
+
 export default function SpeakerCarousel({
   labels,
   children,
@@ -122,46 +182,12 @@ export default function SpeakerCarousel({
         ))}
       </div>
 
-      {/* Centred on the content column rather than under the card's left
-          column, and clear of the track by a fixed gap -- so it holds one
-          position instead of riding each blurb's two-to-four lines. */}
-      <div className="mt-8 flex w-full items-center justify-center gap-[6px]">
-        <button
-          type="button"
-          onClick={() => goTo(active - 1)}
-          aria-label="Previous speaker"
-          className={cn("flex items-center justify-center p-1", FOCUS)}
-        >
-          <Chevron direction="left" />
-        </button>
-
-        <div className="flex items-center gap-[6px] px-[6px]">
-          {labels.map((label, i) => (
-            <button
-              key={label}
-              type="button"
-              onClick={() => goTo(i)}
-              aria-label={`Show ${label}`}
-              aria-current={i === active}
-              className={cn(
-                "relative size-2 rounded-full bg-base-teal transition-opacity",
-                "before:absolute before:-inset-2 before:content-['']",
-                i === active ? "opacity-100" : "opacity-50",
-                FOCUS,
-              )}
-            />
-          ))}
-        </div>
-
-        <button
-          type="button"
-          onClick={() => goTo(active + 1)}
-          aria-label="Next speaker"
-          className={cn("flex items-center justify-center p-1", FOCUS)}
-        >
-          <Chevron direction="right" />
-        </button>
-      </div>
+      <Control
+        labels={labels}
+        active={active}
+        onSelect={goTo}
+        className="mt-2"
+      />
     </div>
   );
 }

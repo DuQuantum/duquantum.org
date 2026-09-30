@@ -404,6 +404,13 @@ export type Speaker = {
   /** What they are giving: "Opening Keynote", "Plenary Lecture". */
   session: string;
   bio: readonly Segment[];
+  /**
+   * Faculty or personal page. Optional exactly like Organizer.link -- omit it
+   * and the headshot renders as a plain photo rather than a link, so a speaker
+   * without a page needs no special casing. `satisfies` below is what catches a
+   * misspelled key here.
+   */
+  link?: string;
 };
 
 export const speakers = [
@@ -413,6 +420,7 @@ export const speakers = [
     blurb:
       "Michael J. Fitzpatrick Distinguished Professor of Engineering at Duke. Director of the Duke Quantum Center.",
     session: "Opening Keynote",
+    link: "https://ece.duke.edu/people/kenneth-brown/",
     bio: [
       { text: "Ken Brown", bold: true },
       " is ",
@@ -431,6 +439,7 @@ export const speakers = [
     blurb:
       "Charles S. Snydor Distinguished Professor of Computer Science at Duke. Member of the Duke Quantum Center.",
     session: "Closing Keynote and Remarks",
+    link: "https://ece.duke.edu/people/robert-calderbank/",
     bio: [
       { text: "Robert Calderbank", bold: true },
       " is ",
@@ -447,6 +456,7 @@ export const speakers = [
     blurb:
       "Assistant Professor of Physics at Duke. Member of the Duke Quantum Center.",
     session: "Plenary Lecture",
+    link: "https://pratt.duke.edu/people/natalie-klco/",
     bio: [
       { text: "Natalie Klco", bold: true },
       " is an ",
@@ -460,6 +470,7 @@ export const speakers = [
     blurb:
       "Assistant Professor of Electrical and Computer Engineering at Duke. Member of the Duke Quantum Center.",
     session: "Plenary Lecture",
+    link: "https://ece.duke.edu/people/huanqian-loh/",
     bio: [
       { text: "Huanqian (Hazel) Loh", bold: true },
       " is an ",
