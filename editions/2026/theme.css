@@ -56,6 +56,16 @@
     overflow-x: hidden;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Clear the fixed nav bar when jumping to a section. */
+  section[id],
+  footer[id] {
+    scroll-margin-top: 64px;
+  }
+
   ::selection {
     @apply bg-dq-yellow text-dq-page;
   }
@@ -262,6 +272,26 @@
     mask: url("/editions/2026/figma/masks/schedule.svg") center / 100% 100%
       no-repeat;
   }
+}
+
+/* The nav bar folds down from the top edge in a few hard steps, like a
+   terminal printing a line, rather than sliding. Hidden, it is also
+   invisible -- out of the tab order and the accessibility tree -- once the
+   fold has finished closing. */
+.nav-fold {
+  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
+  transition:
+    clip-path 280ms steps(5, end),
+    visibility 0s linear 280ms;
+}
+
+.nav-fold[data-open="true"] {
+  clip-path: inset(0 0 -4px 0);
+  visibility: visible;
+  transition:
+    clip-path 280ms steps(5, end),
+    visibility 0s;
 }
 
 /* Sponsor marquee. The track holds the list twice, so -50% lands exactly on

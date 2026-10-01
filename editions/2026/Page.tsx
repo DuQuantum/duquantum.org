@@ -7,6 +7,7 @@ import Organizers from "./sections/Organizers";
 import Faq from "./sections/Faq";
 import Footer from "./sections/Footer";
 import MlhBadge from "./ui/MlhBadge";
+import NavBar from "./ui/NavBar";
 import { Grain } from "./ui/Crt";
 
 /**
@@ -20,6 +21,7 @@ export default function Page() {
   return (
     <>
       <MlhBadge />
+      <NavBar />
       <div className="artboard overflow-x-clip">
         <main>
           <Hero />
