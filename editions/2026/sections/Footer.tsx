@@ -21,7 +21,7 @@ export default function Footer() {
       style={S.style}
     >
       <Art src="footer/frame.svg" style={S.at(FRAME)} />
-      <Crt style={S.at(FRAME)} mask="footer/frame.svg" />
+      <Crt style={S.at(FRAME)} mask="masks/footer.svg" />
 
       <div
         className="at flex flex-col items-center justify-center gap-6 text-center md:flex-row md:gap-[calc(70*var(--u))]"

@@ -33,10 +33,10 @@ export default function About() {
       />
       <Crt
         style={S.at(BODY, { transform: "rotate(180deg)" })}
-        mask="about/frame-body.svg"
+        mask="masks/about-body.svg"
       />
       <Art src="about/chip.svg" style={S.at(CHIP)} />
-      <Crt style={S.at(CHIP)} mask="about/chip.svg" />
+      <Crt style={S.at(CHIP)} mask="masks/about-chip.svg" />
       <Art src="about/frame-top.svg" style={S.at([122.5, 1722, 746.5, 290.95])} />
       <Art src="about/frame-bottom.svg" style={S.at([121, 2365.8, 758.5, 119.16])} />
 

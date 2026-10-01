@@ -2,9 +2,10 @@ import { cn } from "@/lib/cn";
 import { figma } from "./Art";
 
 /**
- * Screen effects for a panel interior: static scanlines (theme.css `.crt`).
- * Lay it over a panel at the frame's own box and pass the frame's SVG as
- * `mask`, and the effect follows the frame's real outline.
+ * Screen effects for a panel interior: scanlines (theme.css `.crt`). Lay it
+ * over a panel at the frame's own box and pass that frame's mask from
+ * figma/masks/ -- derived from the frame's SVG, white only where the dark
+ * panel fill shows -- so the lines stay off borders, strokes and artwork.
  */
 export function Crt({
   style,

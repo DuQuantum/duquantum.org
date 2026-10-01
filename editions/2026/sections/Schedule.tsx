@@ -32,15 +32,42 @@ const FRAME: Box = [85, 2768, 1558, 1214];
 /** The grid: 9:00 (or the day's first hour) at y=2866, as in the mockup;
  *  ending clear of the corner plate. */
 const GRID: Box = [238, 2866, 1387, 1034];
+/** The grid's box as a fraction of the frame's, for placing it inside the
+ *  frame-sized panel (md and up -- below that the grid is in normal flow). */
+const pct = (n: number) => `${n * 100}%`;
+const GRID_IN_FRAME = {
+  ["--gl" as string]: pct((GRID[0] - FRAME[0]) / FRAME[2]),
+  ["--gt" as string]: pct((GRID[1] - FRAME[1]) / FRAME[3]),
+  ["--gw" as string]: pct(GRID[2] / FRAME[2]),
+  ["--gh" as string]: pct(GRID[3] / FRAME[3]),
+};
+
 /** Column widths in artboard px: time, then six lanes-halves. */
 const TIME_COL = 247;
+/** Every block's title and location, in artboard px. */
+const BLOCK_TEXT = 19;
 const LANE_COL = 190;
 
 /** Tab slots (193:11373-75). The day tabs swap between the filled and the
- *  outline drawing, which are slightly different sizes. */
-const TAB_X: Record<ScheduleDay, number> = { sat: 471.5, sun: 865.2 };
+ *  outline drawing. Figma draws the outline ~5% narrower, which made the
+ *  spacing shift when the active day changed, so here both share one tab
+ *  footprint (474 wide at the base, the filled tab's) and the slots sit on
+ *  one pitch: each tab overlaps the one before it by the same 78px. */
+const TAB_W = 474;
+const TAB_OVERLAP = 78;
+const TAB_X: Record<ScheduleDay, number> = {
+  sat: 471.5,
+  sun: 471.5 + TAB_W - TAB_OVERLAP,
+};
+/** The filled drawing carries its drop shadow, hence the larger box. */
 const filled = (x: number): Box => [x, 2649, 489.1, 132];
-const outline = (x: number): Box => [x, 2649, 451.8, 124];
+const outline = (x: number): Box => [x, 2649, TAB_W, 124];
+
+/** Cap-centred tab text. The display face sets its capitals ~0.1em above the
+ *  middle of the line box, and the frame's top edge covers the tabs' bottom
+ *  ~13px, so the text drops 0.1em and rises 6px to sit in the visible middle. */
+const TAB_TEXT =
+  "inline-block translate-y-[0.1em] md:translate-y-[calc(0.1em_-_6*var(--u))]";
 
 /** Top-right lights (241:217): yellow ones flicker, red ones hold. */
 const LIGHTS = [
@@ -85,7 +112,7 @@ function Tab({
         onKeyDown={onKey}
         className={cn(
           "at u-text font-display leading-none transition-colors",
-          "px-4 py-2 md:flex md:items-center md:justify-center md:p-0 md:pb-[calc(8*var(--u))]",
+          "px-4 py-2 md:flex md:items-center md:justify-center md:p-0",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dq-yellow",
           active
             ? "bg-dq-yellow text-dq-ink md:bg-transparent"
@@ -93,7 +120,7 @@ function Tab({
         )}
         style={{ ...S.at(outline(x), { zIndex: 3 }), ...u(80, { sm: 26 }) }}
       >
-        {label.toUpperCase()}
+        <span className={TAB_TEXT}>{label.toUpperCase()}</span>
       </button>
     </>
   );
@@ -112,32 +139,33 @@ function Block({
 }) {
   const { event, rowStart, rowEnd, lane, openEnded } = item;
   const milestone = event.kind === "milestone";
-  const isBreak = event.kind === "break";
   const rows = rowEnd - rowStart;
-  // The mockup sets short titles at 32 and long ones at 24.
-  const big = event.title.length <= 18 && rows >= 3;
-  // Anything with more to say than fits -- details, or a location that may
-  // truncate on a narrow screen -- opens the card.
-  const interactive = Boolean(event.details || event.location);
+  // Only blocks with details open a card (and wear the +). A location cut
+  // short on a narrow screen is still readable in the tooltip.
+  const interactive = Boolean(event.details);
+
+  // One text size for every block. With 5px borders, a one-hour block has
+  // room for two lines of title and one of location (3 x 19 x 1.25 = 71 of
+  // its ~76px inside), and a half-hour milestone for one line -- so text fits by construction, and the titles
+  // and locations are capped at those line counts so it stays that way.
+  const text = u(BLOCK_TEXT, { sm: 13, lh: 1.25 });
 
   const body = (
     <>
       <span
         className={cn(
-          "u-text block font-medium",
-          // two lines at most, so a narrow screen never pushes the
-          // location out of a one-hour block
-          !milestone && "line-clamp-2",
-          milestone && "tracking-wide",
+          "u-text relative font-medium",
+          milestone ? "block tracking-wide" : "line-clamp-2",
         )}
-        style={u(milestone || big ? 32 : 24, { sm: 13, lh: 1.05 })}
+        style={text}
       >
         {event.title}
       </span>
       {event.location && rows >= 3 && (
         <span
-          className="u-text mt-[0.2em] block w-full truncate font-light"
-          style={u(big ? 28 : 22, { sm: 12, lh: 1.05 })}
+          className="u-text relative mt-[0.15em] block w-full truncate font-light"
+          title={event.location}
+          style={text}
         >
           {event.location}
         </span>
@@ -145,8 +173,8 @@ function Block({
       {interactive && (
         <span
           aria-hidden
-          className="u-text absolute bottom-[0.15em] right-[0.35em] font-bold opacity-70"
-          style={u(20, { sm: 11 })}
+          className="u-text absolute bottom-[0.1em] right-[0.35em] font-bold opacity-70"
+          style={u(16, { sm: 11 })}
         >
           {open ? "−" : "+"}
         </span>
@@ -154,24 +182,43 @@ function Block({
     </>
   );
 
+  const edge = "border-[length:max(2px,calc(5*var(--u)))]";
+  const skin = milestone
+    ? "bg-[rgb(224_178_109/0.69)] border-dq-yellow"
+    : "bg-dq-event/[0.58] border-dq-event-edge";
+
   const className = cn(
-    "relative z-[1] flex flex-col items-center justify-center overflow-hidden text-center",
-    "border-[length:max(3px,calc(7*var(--u)))] px-[0.5em]",
-    milestone
-      ? "bg-[rgb(224_178_109/0.69)] border-dq-yellow text-dq-panel"
-      : isBreak
-        ? "border-dashed border-dq-red/80 bg-transparent text-dq-red"
-        : "bg-dq-event/[0.58] border-dq-event-edge text-dq-amber",
-    openEnded &&
-      "[mask-image:linear-gradient(to_bottom,#000_45%,transparent)] justify-start pt-[0.6em]",
+    "relative z-[1] flex flex-col items-center overflow-hidden px-[0.5em] text-center",
+    !openEnded && edge,
+    milestone ? "text-dq-panel" : "text-dq-amber",
+    // Open-ended: the box fades out down the grid, the text does not -- so
+    // the fill and border live on a masked layer behind it instead.
+    openEnded
+      ? "justify-start pt-[0.6em]"
+      : skin,
     interactive &&
       "cursor-pointer transition-colors hover:border-dq-yellow/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dq-yellow",
-    open && "border-dq-yellow/80",
+    open && !openEnded && "border-dq-yellow/80",
+  );
+
+  const fade = openEnded && (
+    <span
+      aria-hidden
+      className={cn(
+        "pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,#000_40%,transparent)]",
+        edge,
+        skin,
+        open && "border-dq-yellow/80",
+      )}
+    />
   );
 
   const style = {
     gridRow: `${rowStart} / ${rowEnd}`,
     gridColumn: `${lane * 2 + 2} / span 2`,
+    // `safe`: if text ever overflows, it is trimmed at the bottom and never
+    // pushed up past the top edge. (Set here: Tailwind will not emit it.)
+    ...(openEnded ? {} : { justifyContent: "safe center" }),
   };
 
   return interactive ? (
@@ -183,10 +230,12 @@ function Block({
       aria-expanded={open}
       aria-controls={detailsId}
     >
+      {fade}
       {body}
     </button>
   ) : (
     <div className={className} style={style}>
+      {fade}
       {body}
     </div>
   );
@@ -204,11 +253,12 @@ function Details({
   id: string;
   onClose: () => void;
 }) {
-  const { event, rowStart, rowEnd, lane } = item;
-  // Beside the block: to its right, or to its left from the last lane. In the
-  // lower half of the day it hangs upward from the block's bottom instead, so
-  // it never runs off the foot of the grid.
-  const col = lane < 2 ? lane * 2 + 4 : lane * 2;
+  const { event, rowStart, lane } = item;
+  // Beside the block: to the right of the first lane, to the left of any
+  // other, so it never reaches the frame's right edge. In the lower half of
+  // the day it hangs upward from the block's top instead, clear of the
+  // bottom edge and the corner plate.
+  const col = lane === 0 ? 4 : lane * 2;
   const low = rowStart > rows / 2;
 
   return (
@@ -218,17 +268,17 @@ function Details({
       aria-label={`${event.title} details`}
       className="relative z-10 border-[length:max(2px,calc(5*var(--u)))] border-dq-yellow bg-dq-panel p-[1em] text-left text-dq-amber shadow-[0_0_0_4px_rgb(var(--dq-panel)),0_12px_40px_rgb(0_0_0/0.6)]"
       style={{
-        gridRow: low ? `${rowEnd - 1} / ${rowEnd}` : `${rowStart} / span 1`,
+        gridRow: low ? `${rowStart - 1} / ${rowStart}` : `${rowStart} / span 1`,
         alignSelf: low ? "end" : "start",
         gridColumn: `${col} / span 2`,
         ...u(19, { sm: 12, min: 12, lh: 1.35 }),
       }}
     >
-      <p className="u-text font-bold text-dq-yellow" style={u(22, { sm: 13, min: 13 })}>
+      <p className="u-text font-bold text-dq-yellow" style={u(19, { sm: 12, min: 12 })}>
         <span aria-hidden className="text-dq-red">&gt; </span>
         {event.title}
       </p>
-      <p className="u-text mt-[0.35em] font-light opacity-90" style={u(18, { sm: 12, min: 12 })}>
+      <p className="u-text mt-[0.35em] font-light opacity-90" style={u(19, { sm: 12, min: 12 })}>
         {item.when}
         {event.location ? ` · ${event.location}` : ""}
       </p>
@@ -304,10 +354,10 @@ export default function Schedule() {
       <Art src="schedule/tab-label.svg" style={S.at([115.6, 2649, 448.4, 132], { zIndex: 2 })} />
       <h2
         id="schedule-heading"
-        className="at u-text mb-4 font-display leading-none text-dq-yellow md:mb-0 md:flex md:items-center md:justify-center md:pb-[calc(8*var(--u))] md:text-dq-ink"
+        className="at u-text mb-4 font-display leading-none text-dq-yellow md:mb-0 md:flex md:items-center md:justify-center md:text-dq-ink"
         style={{ ...S.at([110, 2649, 444, 124], { zIndex: 3 }), ...u(80, { sm: 40 }) }}
       >
-        SCHEDULE
+        <span className={TAB_TEXT}>SCHEDULE</span>
       </h2>
       <div
         role="tablist"
@@ -329,19 +379,24 @@ export default function Schedule() {
 
       {/* The frame sits over the tabs, so their feet tuck under its top edge. */}
       <Art src="schedule/frame.svg" style={S.at(FRAME, { zIndex: 4 })} />
-      <Crt style={S.at(FRAME, { zIndex: 5 })} mask="schedule/frame.svg" />
+      <Crt style={S.at(FRAME, { zIndex: 5 })} mask="masks/schedule.svg" />
 
       <div
         id={panelId}
         role="tabpanel"
         aria-labelledby={`tab-${day}`}
-        className="at panel-sm z-[6] mt-4 overflow-x-auto max-md:relative md:mt-0 md:overflow-visible"
-        style={S.at(GRID)}
+        // The panel spans the whole frame and is clipped to its dark interior;
+        // the grid sits inside it at its own artboard box. Everything that
+        // reaches past the grid -- the first hour label, lines running out to
+        // the frame, the details card -- is still inside the clipped box.
+        className="at panel-sm schedule-clip z-[6] mt-4 overflow-x-auto max-md:relative md:mt-0 md:overflow-visible"
+        style={S.at(FRAME)}
       >
         <div
           ref={gridRef}
-          className="relative grid h-[calc(var(--rows)*16px)] min-w-[720px] md:h-full md:min-w-0"
+          className="relative grid h-[calc(var(--rows)*16px)] min-w-[720px] md:absolute md:left-[var(--gl)] md:top-[var(--gt)] md:h-[var(--gh)] md:w-[var(--gw)] md:min-w-0"
           style={{
+            ...GRID_IN_FRAME,
             gridTemplateColumns: columns,
             gridTemplateRows: `repeat(${layout.rows}, minmax(0, 1fr))`,
             ["--rows" as string]: layout.rows,
@@ -367,10 +422,7 @@ export default function Schedule() {
             <div
               key={i}
               aria-hidden
-              className={cn(
-                "pointer-events-none border-l border-dq-ink md:-mb-[calc(80*var(--u))] md:-mt-[calc(88*var(--u))]",
-                i === 5 && "border-r",
-              )}
+              className="pointer-events-none border-l border-dq-ink md:-mb-[calc(80*var(--u))] md:-mt-[calc(88*var(--u))]"
               style={{ gridRow: "1 / -1", gridColumn: i + 2 }}
             />
           ))}
@@ -384,7 +436,7 @@ export default function Schedule() {
             >
               <span
                 className="u-text block -translate-y-1/2 whitespace-nowrap pr-3 text-right font-display leading-none text-dq-red md:pr-[calc(45*var(--u))]"
-                style={u(64, { sm: 20 })}
+                style={u(40, { sm: 16 })}
               >
                 {clock(t)}
               </span>

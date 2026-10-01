@@ -1,5 +1,6 @@
-import Image from "next/image";
-import Art, { figma } from "../ui/Art";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import Art from "../ui/Art";
 import { stage, u, type Box } from "../ui/stage";
 import { cn } from "@/lib/cn";
 import { site } from "../content";
@@ -17,12 +18,30 @@ import { site } from "../content";
  */
 const S = stage([0, 0, 1748, 1000]);
 
-/** Figma 183:11051 -- three knobs, left to right. Spin speed and direction
+/**
+ * The DUQUANTUM logo, inlined rather than loaded as an <img>. Its outlined
+ * lettering uses SVG masks, and browsers paint a masked SVG image as a bitmap
+ * and then scale it, which left the letters soft; inline, it stays vector.
+ *
+ * Read when rendered rather than at module load, so an edit to the SVG shows
+ * up in dev; the page is static, so in production this runs once, at build.
+ */
+function logoSvg() {
+  return readFileSync(
+    join(process.cwd(), "public/editions/2026/figma/hero/logo.svg"),
+    "utf8",
+  ).replace(
+    /<svg width="[\d.]+" height="[\d.]+"/,
+    '<svg width="100%" height="100%" preserveAspectRatio="none" aria-hidden="true" focusable="false"',
+  );
+}
+
+/** Figma 183:11051 -- three knobs, left to right. Seconds per turn and direction
  *  differ a little per knob so they never move as one. */
 const KNOBS = [
-  { x: 1392, art: 3, period: 70, dir: "normal" },
-  { x: 1516, art: 2, period: 54, dir: "reverse" },
-  { x: 1640, art: 1, period: 82, dir: "normal" },
+  { x: 1392, art: 3, period: 44, dir: "normal" },
+  { x: 1516, art: 2, period: 34, dir: "reverse" },
+  { x: 1640, art: 1, period: 52, dir: "normal" },
 ] as const;
 
 function Knob({ x, art, period, dir }: (typeof KNOBS)[number]) {
@@ -109,13 +128,9 @@ export default function Hero() {
         <span className="block font-display text-[64px] leading-none text-dq-yellow md:sr-only">
           {site.name}
         </span>
-        <Image
-          src={figma("hero/logo.svg")}
-          alt=""
-          fill
-          unoptimized
-          priority
-          className="hidden object-fill md:block"
+        <span
+          className="absolute inset-0 hidden md:block"
+          dangerouslySetInnerHTML={{ __html: logoSvg() }}
         />
       </h1>
 

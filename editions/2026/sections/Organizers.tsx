@@ -98,7 +98,7 @@ export default function Organizers() {
       style={S.style}
     >
       <Art src="organizers/frame.svg" style={S.at([118, 6128, 1517.5, 1415])} />
-      <Crt style={S.at([118, 6128, 1517.5, 1415])} mask="organizers/frame.svg" />
+      <Crt style={S.at([118, 6128, 1517.5, 1415])} mask="masks/organizers.svg" />
       <Art src="organizers/title-tab.svg" style={S.at([964, 6133, 672.06, 423.19])} />
       <Art src="organizers/line-2.svg" style={S.at([997.1, 6397.2, 774, 951])} />
       <Art src="organizers/trace-left.svg" style={S.at([331, 6591.7, 62, 950.8])} />

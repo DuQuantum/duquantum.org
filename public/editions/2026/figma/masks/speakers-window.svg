@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="694.919" height="694.919" viewBox="0 0 694.919 694.919" fill="none" preserveAspectRatio="none">
+<defs>
+<linearGradient id="paint0_linear_0_339" x1="263.552" y1="1435.76" x2="-643.23" y2="808.192" gradientUnits="userSpaceOnUse">
+<stop stop-color="#AF4E48" />
+<stop offset="1" stop-color="#E3AB6B" />
+</linearGradient>
+<linearGradient id="paint1_linear_0_339" x1="267.282" y1="186.996" x2="224.33" y2="-48.0786" gradientUnits="userSpaceOnUse">
+<stop stop-color="#AF4E48" />
+<stop offset="1" stop-color="#E3AB6B" />
+</linearGradient>
+<mask id="panel" maskUnits="userSpaceOnUse" x="0" y="0" width="694.919" height="694.919" style="mask-type:luminance"><g id="window">
+<rect id="Rectangle 142" x="5" y="5" width="684.919" height="684.919" fill="white" stroke="black" stroke-width="10" />
+<rect id="Rectangle 145" x="6.00806" y="7.00879" width="688.911" height="87.1152" fill="black" />
+<circle id="Ellipse 40" cx="44.5591" cy="50.5664" r="15.5205" fill="black" />
+<circle id="Ellipse 41" cx="92.6227" cy="50.5664" r="15.5205" fill="black" />
+<circle id="Ellipse 42" cx="140.686" cy="50.5664" r="15.5205" fill="black" />
+</g>
+</mask></defs>
+<rect width="694.919" height="694.919" fill="white" mask="url(#panel)" /></svg>

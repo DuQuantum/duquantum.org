@@ -114,13 +114,16 @@ function Card({
 
         <div className="relative flex flex-col gap-4 p-5 md:absolute md:inset-x-[calc(42*var(--u))] md:bottom-[calc(90*var(--u))] md:top-[calc(128*var(--u))] md:gap-[calc(28*var(--u))] md:p-0">
           <div className="flex items-start gap-4 md:gap-[calc(30*var(--u))]">
-            <div className="relative size-[110px] shrink-0 border-4 border-dq-red md:size-[calc(250*var(--u))] md:border-[calc(7*var(--u))]">
+            {/* The photos are circles cut on the old placeholder purple; a
+                red ring, with the photo nudged up a little in scale, crops
+                that purple corner and fringe out, matching the organizers. */}
+            <div className="relative size-[110px] shrink-0 overflow-hidden rounded-full border-4 border-dq-red bg-dq-red md:size-[calc(250*var(--u))] md:border-[calc(9*var(--u))]">
               <Image
                 src={speaker.photo}
                 alt={front ? speaker.name : ""}
                 fill
                 sizes="(min-width: 768px) 15vw, 110px"
-                className="object-cover"
+                className="scale-[1.04] object-cover"
               />
             </div>
             <div className="min-w-0">
@@ -198,7 +201,7 @@ export default function Speakers() {
       style={S.style}
     >
       <Art src="speakers/bio-frame.svg" style={S.at(BIO_FRAME)} />
-      <Crt style={S.at(BIO_FRAME)} mask="speakers/bio-frame.svg" />
+      <Crt style={S.at(BIO_FRAME)} mask="masks/speakers-bio.svg" />
 
       <Art src="speakers/title-tab.svg" style={S.at([917.57, 5065.5, 698.74, 257.81])} />
       <h2
@@ -223,7 +226,7 @@ export default function Speakers() {
         ))}
         <Crt
           style={{ inset: 0, width: "auto", height: "auto", zIndex: 15 }}
-          mask="speakers/window-4.svg"
+          mask="masks/speakers-window.svg"
         />
       </div>
 

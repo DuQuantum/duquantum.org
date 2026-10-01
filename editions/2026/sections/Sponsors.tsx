@@ -101,7 +101,7 @@ export default function Sponsors() {
     >
       <Art src="sponsors/frame.svg" style={S.at(FRAME)} />
       <Art src="sponsors/frame-mask.svg" style={S.at(FRAME)} />
-      <Crt style={S.at(FRAME)} mask="sponsors/frame.svg" />
+      <Crt style={S.at(FRAME, { zIndex: 1 })} mask="masks/sponsors.svg" />
       <Art src="sponsors/bracket-left.svg" style={S.at([113, 4130, 93, 800])} />
       <Art
         src="sponsors/bracket-right.svg"
@@ -110,14 +110,15 @@ export default function Sponsors() {
 
       <h2
         id="sponsors-heading"
-        className="at u-text text-heading text-center font-display leading-none md:flex md:items-center md:justify-center"
+        className="at u-text text-heading z-[2] text-center font-display leading-none md:flex md:items-center md:justify-center"
         style={{ ...S.at([594, 4195, 600, 131]), ...u(110, { sm: 48 }) }}
       >
         Sponsors
       </h2>
 
       <div
-        className="at mt-6 flex flex-col justify-center gap-5 md:mt-0 md:gap-[calc(64*var(--u))]"
+        // above the scanlines, so the plates and their bezels stay clean
+        className="at z-[2] mt-6 flex flex-col justify-center gap-5 md:mt-0 md:gap-[calc(64*var(--u))]"
         style={S.at([150, 4345, 1458, 520])}
       >
         <Row list={sponsors.slice(0, half)} period={38} />

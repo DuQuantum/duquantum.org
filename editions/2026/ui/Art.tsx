@@ -7,7 +7,9 @@ export const figma = (path: string) => `/editions/2026/figma/${path}`;
 /**
  * A decorative layer exported from Figma, stretched over its artboard box.
  * Always `.deco`: it exists only at md and up, where the section is drawn on
- * the artboard, and is hidden from assistive tech either way.
+ * the artboard, and is hidden from assistive tech either way. It never takes
+ * pointer events, so a frame drawn over interactive content (the schedule's
+ * stroke layer over its grid) does not swallow clicks.
  *
  * `fill` + `unoptimized` because these are SVGs whose box is the layout --
  * there is no intrinsic size to respect and nothing for the optimiser to do.
@@ -24,7 +26,11 @@ export default function Art({
   priority?: boolean;
 }) {
   return (
-    <div aria-hidden className={cn("deco", className)} style={style}>
+    <div
+      aria-hidden
+      className={cn("deco pointer-events-none", className)}
+      style={style}
+    >
       <Image
         src={figma(src)}
         alt=""

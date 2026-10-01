@@ -139,8 +139,9 @@
   }
 
   /* -------------------------------------------------------------------------
-   * Retro-terminal screen effects. Deliberately still -- moving scanlines and
-   * a jittering grain read as frantic. Stackable: `.crt` gives the scanlines;
+   * Retro-terminal screen effects. Kept gentle: the scanlines crawl smoothly
+   * (stepped motion and a jittering grain read as frantic, and a sweeping
+   * bright band looked like a glitch). Stackable: `.crt` gives the scanlines;
    * add more layers as further classes alongside it.
    *
    * A `.crt` element sits exactly over a panel's interior. Pass the frame's
@@ -154,17 +155,19 @@
     mask: var(--crt-mask, none) center / 100% 100% no-repeat;
   }
 
-  /* Fine horizontal scanlines. */
+  /* Fine horizontal scanlines, crawling slowly and smoothly downward. The
+     pattern repeats every 4px, so moving it 4px loops without a seam. */
   .crt::before {
     content: "";
     position: absolute;
     inset: 0;
     background: repeating-linear-gradient(
       to bottom,
-      rgb(255 255 255 / 0.028) 0 1px,
+      rgb(255 255 255 / 0.045) 0 1px,
       transparent 1px 3px,
-      rgb(0 0 0 / 0.22) 3px 4px
+      rgb(0 0 0 / 0.32) 3px 4px
     );
+    animation: crt-crawl 1.7s linear infinite;
   }
 
   /* The page grain. Figma's noise effect (fractal noise at frequency 2,
@@ -182,6 +185,12 @@
 :root {
   /* Figma's noise filter, verbatim, on a 160px tile. */
   --dq-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch' seed='3085'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2' intercept='-0.5'/%3E%3CfeFuncG type='linear' slope='2' intercept='-0.5'/%3E%3CfeFuncB type='linear' slope='2' intercept='-0.5'/%3E%3CfeFuncA type='discrete' tableValues='0 0.25'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes crt-crawl {
+  to {
+    background-position: 0 4px;
+  }
 }
 
 /* -------------------------------------------------------------------------
@@ -242,6 +251,17 @@
   animation: light-flicker var(--flicker-period, 3.7s) steps(1, end) infinite;
   animation-delay: var(--flicker-delay, 0s);
   box-shadow: 0 0 calc(10 * var(--u, 1px)) rgb(var(--dq-yellow) / 0.35);
+}
+
+/* The schedule panel spans the frame (sections/Schedule.tsx); clip it to the
+   frame's dark interior so grid lines and labels stop at the border. */
+@media (min-width: 768px) {
+  .schedule-clip {
+    -webkit-mask: url("/editions/2026/figma/masks/schedule.svg") center / 100% 100%
+      no-repeat;
+    mask: url("/editions/2026/figma/masks/schedule.svg") center / 100% 100%
+      no-repeat;
+  }
 }
 
 /* Sponsor marquee. The track holds the list twice, so -50% lands exactly on

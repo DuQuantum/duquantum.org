@@ -538,7 +538,7 @@ export type ScheduleEvent = {
   title: string;
   location?: string;
   details?: readonly Segment[];
-  kind?: "event" | "milestone" | "break";
+  kind?: "event" | "milestone";
   lane?: number;
 };
 
@@ -674,7 +674,6 @@ export const schedule = [
       " — Duke Quantum Center.",
     ],
   },
-  { day: "sun", start: "13:30", end: "13:45", title: "Break", kind: "break" },
   {
     day: "sun",
     start: "13:45",
@@ -685,7 +684,6 @@ export const schedule = [
       "Representatives from sponsors running challenges should be available either in-person or online during the first half of Deliberations, when challenge awards will be determined. In the second half of Deliberations, overall awards will be determined by in-person judges from DuQIS and the DQC.",
     ],
   },
-  { day: "sun", start: "15:15", end: "15:30", title: "Break", kind: "break" },
   {
     day: "sun",
     start: "15:30",
