@@ -19,11 +19,14 @@ export default function ExternalLink({
   href,
   label,
   className,
+  style,
   children,
 }: {
   href: string;
   label: string;
   className?: string;
+  /** Optional, for callers that position the link with inline geometry. */
+  style?: React.CSSProperties;
   children: React.ReactNode;
 }) {
   return (
@@ -37,6 +40,7 @@ export default function ExternalLink({
         "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-base-teal focus-visible:ring-offset-4 focus-visible:ring-offset-base-purple",
         className,
       )}
+      style={style}
     >
       {children}
     </a>

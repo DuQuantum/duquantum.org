@@ -11,4 +11,4 @@
  *
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-export { edition as default } from "./placeholder";
+export { edition as default } from "./2026";

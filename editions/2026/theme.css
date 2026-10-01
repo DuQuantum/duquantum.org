@@ -1,0 +1,316 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+ * The 2026 edition's stylesheet -- see editions/README.md for why each
+ * edition carries its own @tailwind directives.
+ *
+ * Figma: "Wireframe - 4" (181:182), a 1748px-wide artboard.
+ *
+ * Every section is drawn on that artboard's coordinates. At md and up the
+ * page is one inline-size container and `--u` is one artboard pixel expressed
+ * in container units, so a section, its frames and its type all scale together
+ * and nothing inside a section ever drifts relative to anything else. Below
+ * md the frames drop out and sections stack as ordinary flow content.
+ * ------------------------------------------------------------------------- */
+
+@layer base {
+  :root {
+    /* Palette. Space-separated channels so Tailwind's /opacity works. */
+    --dq-page: 14 5 37; /* #0E0525 -- the artboard background */
+    --dq-panel: 10 5 23; /* #0A0517 -- every section's interior, one shade */
+    --dq-red: 99 35 35; /* #632323 -- every red asset outside the hero */
+    --dq-yellow: 243 181 98; /* #F3B562 */
+    --dq-ink: 62 29 35; /* #3E1D23 -- text on yellow, and the faint grid */
+    --dq-amber: 232 177 103; /* #E8B167 -- schedule block text */
+    --dq-event: 139 59 59; /* #8B3B3B at .58 -- schedule block fill */
+    --dq-event-edge: 55 19 19; /* #371313 -- schedule block border */
+    --dq-night: 16 12 29; /* #100C1D -- the FAQ tab's lettering */
+
+    /* The heading gradient (ABOUT, Sponsors, Organizers), Figma's -32deg. */
+    --dq-heading: linear-gradient(
+      -32deg,
+      #af4e48 6.92%,
+      #e3ab6b 107.13%
+    );
+
+    /* Values for the names the shared components/ui/ExternalLink.tsx uses for
+       its focus ring, so it rings in this edition's yellow on the page bg. */
+    --base-teal: 243 181 98;
+    --base-purple: 14 5 37;
+
+    /* MLH trust badge geometry -- MLH's own numbers, see ui/MlhBadge.tsx. */
+    --mlh-badge-inset: 0.5rem;
+    --mlh-badge-width: clamp(60px, 10vw, 100px);
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --mlh-badge-inset: 50px;
+    }
+  }
+
+  body {
+    @apply bg-dq-page font-mono text-dq-yellow antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-dq-yellow text-dq-page;
+  }
+}
+
+@layer components {
+  /* -------------------------------------------------------------------------
+   * Artboard geometry. ui/stage.ts writes the numbers; these rules read them.
+   * ----------------------------------------------------------------------- */
+
+  /* The scaling root. One per page -- nesting another inline-size container
+     inside it would re-base every `cqw` below that point. */
+  .artboard {
+    container-type: inline-size;
+    --u: calc(100cqw / 1748);
+  }
+
+  /* A section's box on the artboard: x, width and aspect ratio from Figma.
+     Below md it is a plain padded block. */
+  .stage {
+    position: relative;
+    margin-inline: 16px;
+  }
+
+  /* Anything placed on a stage with Figma coordinates. Static below md, so
+     its content still flows; decorations add `.deco` and vanish there. */
+  .deco {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .stage {
+      margin-inline: 0;
+      margin-left: calc(var(--sx) * var(--u));
+      width: calc(var(--sw) * var(--u));
+      height: calc(var(--sh) * var(--u));
+    }
+
+    .at,
+    .deco {
+      display: block;
+      position: absolute;
+      left: var(--l);
+      top: var(--t);
+      width: var(--w);
+      height: var(--h);
+    }
+  }
+
+  /* Design-pixel type sizes: `.u-text` + style={{ "--fs": 80 }}. The px floor
+     only applies below md, where --u is not meant to drive anything. */
+  .u-text {
+    font-size: var(--fs-sm, 16px);
+    line-height: var(--lh, normal);
+  }
+
+  @media (min-width: 768px) {
+    .u-text {
+      font-size: max(var(--fs-min, 0px), calc(var(--fs) * var(--u)));
+    }
+  }
+
+  /* The heading gradient, clipped to the glyphs. */
+  .text-heading {
+    background-image: var(--dq-heading);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Below md every frame becomes this: the panel colour inside a red rule. */
+  .panel-sm {
+    @apply border-[6px] border-dq-red bg-dq-panel;
+  }
+
+  @media (min-width: 768px) {
+    .panel-sm {
+      border-width: 0;
+      background: none;
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+   * Retro-terminal screen effects. Deliberately still -- moving scanlines and
+   * a jittering grain read as frantic. Stackable: `.crt` gives the scanlines;
+   * add more layers as further classes alongside it.
+   *
+   * A `.crt` element sits exactly over a panel's interior. Pass the frame's
+   * own SVG as --crt-mask (ui/Crt.tsx does) and the effect is clipped to the
+   * frame's real outline rather than its bounding box.
+   * ----------------------------------------------------------------------- */
+  .crt {
+    pointer-events: none;
+    overflow: hidden;
+    -webkit-mask: var(--crt-mask, none) center / 100% 100% no-repeat;
+    mask: var(--crt-mask, none) center / 100% 100% no-repeat;
+  }
+
+  /* Fine horizontal scanlines. */
+  .crt::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 0.028) 0 1px,
+      transparent 1px 3px,
+      rgb(0 0 0 / 0.22) 3px 4px
+    );
+  }
+
+  /* The page grain. Figma's noise effect (fractal noise at frequency 2,
+     thresholded to a hard 50% alpha, 25% opacity) rebuilt as a still tile. */
+  .grain {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: var(--dq-grain) 0 0 / 160px 160px;
+    opacity: 0.22;
+  }
+}
+
+:root {
+  /* Figma's noise filter, verbatim, on a 160px tile. */
+  --dq-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch' seed='3085'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2' intercept='-0.5'/%3E%3CfeFuncG type='linear' slope='2' intercept='-0.5'/%3E%3CfeFuncB type='linear' slope='2' intercept='-0.5'/%3E%3CfeFuncA type='discrete' tableValues='0 0.25'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* -------------------------------------------------------------------------
+ * Section motion.
+ * ----------------------------------------------------------------------- */
+
+/* Hero knobs: one slow revolution a minute, give or take, alternating
+   direction so the three never read as one gear. */
+@keyframes knob-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.knob-pointer {
+  transform-origin: 44.83% 44.78%; /* the dial's centre, from the SVG */
+  animation: knob-spin var(--knob-period, 60s) linear infinite;
+  animation-direction: var(--knob-dir, normal);
+}
+
+/* Schedule lights: mostly on, with an irregular dip and stutter. steps()
+   keeps it a hard electrical flicker rather than a fade. */
+@keyframes light-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  7% {
+    opacity: 0.55;
+  }
+  8% {
+    opacity: 1;
+  }
+  41% {
+    opacity: 1;
+  }
+  42% {
+    opacity: 0.35;
+  }
+  43% {
+    opacity: 0.9;
+  }
+  44% {
+    opacity: 0.4;
+  }
+  46% {
+    opacity: 1;
+  }
+  78% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 1;
+  }
+}
+
+.light-flicker {
+  animation: light-flicker var(--flicker-period, 3.7s) steps(1, end) infinite;
+  animation-delay: var(--flicker-delay, 0s);
+  box-shadow: 0 0 calc(10 * var(--u, 1px)) rgb(var(--dq-yellow) / 0.35);
+}
+
+/* Sponsor marquee. The track holds the list twice, so -50% lands exactly on
+   the start of the second copy and the loop has no seam. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee var(--marquee-period, 40s) linear infinite;
+  animation-direction: var(--marquee-dir, normal);
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Speaker deck (sections/Speakers.tsx): cards glide between slots, and
+   their frame colour and content cross-fade as they reach or leave the front. */
+.deck-card {
+  transition: transform 380ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.deck-fade {
+  transition: opacity 380ms ease;
+}
+
+/* The speaker bio printing in, a few lines at a time. */
+@keyframes bio-in {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* A blinking block cursor for terminal-style labels. */
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  margin-left: 0.15em;
+  vertical-align: -0.12em;
+  background: currentColor;
+  animation: caret 1.1s steps(1) infinite;
+}
+
+/* -------------------------------------------------------------------------
+ * Reduced motion: every loop above stops. The deck and accordion still
+ * complete, just instantly.
+ * ----------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

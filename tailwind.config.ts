@@ -27,6 +27,18 @@ const config: Config = {
           blue: rgb("--base-blue"),
           cyan: rgb("--base-cyan"),
         },
+        // 2026 edition (editions/2026/theme.css)
+        dq: {
+          page: rgb("--dq-page"),
+          panel: rgb("--dq-panel"),
+          red: rgb("--dq-red"),
+          yellow: rgb("--dq-yellow"),
+          ink: rgb("--dq-ink"),
+          amber: rgb("--dq-amber"),
+          event: rgb("--dq-event"),
+          "event-edge": rgb("--dq-event-edge"),
+          night: rgb("--dq-night"),
+        },
       },
       fontSize: {
         gate: "var(--gate-size)",
@@ -47,6 +59,10 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        // 2026 edition
+        display: ["var(--font-display)", "Antonio", "Impact", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "Menlo", "monospace"],
+        condensed: ["var(--font-condensed)", "sans-serif"],
       },
     },
   },
