@@ -7,7 +7,7 @@ import { site } from "../content";
 
 /**
  * Figma: footer container (243:366) -- a full-width rail with a bevelled
- * plate in the middle, holding DuQuantum × HackDuke and the contact address.
+ * plate in the middle, holding DuQIS × HackDuke and the contact address.
  * The plate's inner edge runs x=170..1573, y=8194..8492 on the artboard.
  */
 const S = stage([-7, 8189, 1762.5, 313]);
@@ -46,7 +46,7 @@ export default function Footer() {
             className="u-text whitespace-nowrap font-display leading-none text-dq-yellow"
             style={u(72, { sm: 34 })}
           >
-            DuQuantum{" "}
+            DuQIS{" "}
             {/* the display face has no multiplication sign */}
             <span className="font-mono text-[0.8em] text-dq-red">×</span> HackDuke
           </p>

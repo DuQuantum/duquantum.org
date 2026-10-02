@@ -496,6 +496,7 @@ export const about: readonly (readonly Segment[])[] = [
     { text: "All", bold: true },
     " undergrads, Master’s and PhD students are eligible.",
   ],
+
   [
     "The event is jointly hosted by the ",
     {
@@ -510,7 +511,12 @@ export const about: readonly (readonly Segment[])[] = [
       text: "Qiskit Fall Fest",
       href: "https://www.ibm.com/quantum/blog/qiskit-fall-fest-2026",
     },
-    " Event!",
+    " Event, as well as a member event for the 2027 season of ",
+    {
+      text: "Major League Hacking",
+      href: "https://www.ibm.com/quantum/blog/qiskit-fall-fest-2026",
+    },
+    " (MLH)!",
   ],
 ];
 
@@ -553,17 +559,17 @@ export const schedule = [
     day: "sat",
     start: "09:00",
     end: "11:00",
-    title: "Student Check-In",
+    title: "Hacker Check-In",
     location: "Wilkinson 0th Floor Lobby",
   },
   {
     day: "sat",
     start: "10:30",
     end: "11:30",
-    title: "Opening Ceremony / Keynote",
+    title: "Opening Ceremony",
     location: "Wilkinson 021",
     details: [
-      "Keynote Speech by ",
+      "Opening Keynote by ",
       { text: "Ken Brown", bold: true },
       ", Director of the Duke Quantum Center and Michael J. Fitzpatrick Distinguished Professor of Electrical and Computer Engineering, Physics, and Chemistry at Duke.",
     ],
@@ -663,15 +669,16 @@ export const schedule = [
     location: "Wilkinson 021 / 126 / 130 / 132 / 136",
     details: [
       { text: "Wilkinson 126", bold: true },
-      " — Pasqal. ",
+      " -> Pasqal. ",
       { text: "Wilkinson 130", bold: true },
-      " — BlueQubit. ",
+      " -> BlueQubit. ",
       { text: "Wilkinson 132", bold: true },
-      " — Alice and Bob. ",
+      " -> Alice and Bob. ",
       { text: "Wilkinson 136", bold: true },
-      " — IQM. ",
+      " -> IQM. ",
       { text: "Wilkinson 021", bold: true },
-      " — Duke Quantum Center.",
+      " -> Duke Quantum Center.",
+      "NOTE: the Google Quantum AI challenge will be judged virtually (via Zoom) by Google Quantum AI representative.",
     ],
   },
   {
