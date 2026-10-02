@@ -573,9 +573,9 @@ export const schedule = [
     day: "sat",
     start: "11:30",
     end: "12:30",
-    title: "Team Formation Mixer / Lunch",
+    title: "Hacker Lunch",
     location: "Wilkinson 0th Floor Lobby",
-    details: ["Catered from Panera."],
+    details: ["TBD."],
   },
   {
     day: "sat",
@@ -606,7 +606,7 @@ export const schedule = [
     day: "sat",
     start: "16:00",
     end: "17:30",
-    title: "Lecture by Duke Quantum Center Faculty",
+    title: "Plenary Lectures by DQC Faculty",
     location: "Wilkinson 130",
     details: [
       "Joint lecture by ",
@@ -623,18 +623,18 @@ export const schedule = [
     end: "20:00",
     title: "Hacker Dinner",
     location: "Wilkinson 0th Floor Lobby",
-    details: ["Costco pizza + salad bar."],
+    details: ["(likely) Costco pizza + salad bar."],
   },
-  {
-    day: "sat",
-    start: "18:30",
-    end: "20:00",
-    title: "Sponsor Dinner",
-    location: "Commons (Brodhead Center)",
-    details: [
-      "Sponsor representatives and Duke Quantum Center faculty are invited to a group dinner at the Commons restaurant.",
-    ],
-  },
+  // {
+  //   day: "sat",
+  //   start: "18:30",
+  //   end: "20:00",
+  //   title: "Sponsor Dinner",
+  //   location: "Commons (Brodhead Center)",
+  //   details: [
+  //     "Sponsor representatives and Duke Quantum Center faculty are invited to a group dinner at the Commons restaurant.",
+  //   ],
+  // },
   {
     day: "sat",
     start: "20:00",
@@ -681,7 +681,7 @@ export const schedule = [
     title: "Deliberations",
     location: "Wilkinson 130",
     details: [
-      "Representatives from sponsors running challenges should be available either in-person or online during the first half of Deliberations, when challenge awards will be determined. In the second half of Deliberations, overall awards will be determined by in-person judges from DuQIS and the DQC.",
+      "Representatives from sponsors running challenges should be available either in-person or online during the first half of Deliberations, when challenge awards will be determined. In the second half of Deliberations, overall awards will be determined judges from DuQIS and the DQC.",
     ],
   },
   {
@@ -691,7 +691,7 @@ export const schedule = [
     title: "Closing Ceremony / Awards",
     location: "Wilkinson 021",
     details: [
-      "Closing Remarks by ",
+      "Closing Keynote and Remarks by ",
       { text: "Robert Calderbank", bold: true },
       ", Charles S. Snydor Distinguished Professor of Computer Science, Mathematics, and Electrical and Computer Engineering at Duke.",
     ],
