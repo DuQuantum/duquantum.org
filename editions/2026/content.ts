@@ -341,7 +341,7 @@ export const faq = [
     id: "eligibility",
     question: "Who is eligible to participate in DuQuantum?",
     answer: [
-      "All currently-enrolled undergraduate, Master’s, and PhD students are eligible to attend, provided that they are above 18 years of age by October 24, 2026.",
+      "All currently-enrolled undergraduate, Master\’s, and PhD students are eligible to attend, provided that they are above 18 years of age by October 24, 2026.",
     ],
   },
   {
@@ -494,7 +494,7 @@ export const about: readonly (readonly Segment[])[] = [
     { text: "Duke", bold: true },
     ". For 24 hours, we invite quantum enthusiasts to tackle challenges designed by industry leaders and gain experience with state-of-the-art quantum tools. ",
     { text: "All", bold: true },
-    " undergrads, Master’s and PhD students are eligible.",
+    " undergrads, Master\’s and PhD students are eligible.",
   ],
 
   [
@@ -673,12 +673,12 @@ export const schedule = [
       { text: "Wilkinson 130", bold: true },
       " -> BlueQubit. ",
       { text: "Wilkinson 132", bold: true },
-      " -> Alice and Bob. ",
+      " -> Alice \& Bob. ",
       { text: "Wilkinson 136", bold: true },
       " -> IQM. ",
       { text: "Wilkinson 021", bold: true },
       " -> Duke Quantum Center.",
-      "NOTE: the Google Quantum AI challenge will be judged virtually (via Zoom) by Google Quantum AI representative.",
+      " -- NOTE: the Google Quantum AI challenge will be judged virtually (via Zoom) by Google Quantum AI representative.",
     ],
   },
   {
