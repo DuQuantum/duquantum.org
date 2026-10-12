@@ -704,3 +704,17 @@ export const schedule = [
     ],
   },
 ] as const satisfies readonly ScheduleEvent[];
+
+/**
+ * The Fermata feature (Figma 280:56), between Organizers and FAQ: a pitch and
+ * two link buttons.
+ */
+export const fermata = {
+  name: "Fermata",
+  blurb:
+    "A research notebook designed by scientists, for scientists. Fermata keeps your ideas and your work at the center, with thoughtfully integrated AI tools that help you refine your research during every step of the scientific method. Good science shouldn’t be rushed. Take your time to do it right, with Fermata.",
+  links: [
+    { label: "Download Here", href: "https://getfermata.xyz/" },
+    { label: "User Manual Here", href: "https://getfermata.xyz/guide/" },
+  ],
+} as const;
