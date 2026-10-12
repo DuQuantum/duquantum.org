@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="40" height="117" viewBox="0 0 40 117" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="slider">
+<path id="Vector 130" d="M20 117V0" stroke="url(#paint0_linear_0_7)" stroke-width="11"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_7" x1="20.5" y1="0" x2="20.5" y2="117" gradientUnits="userSpaceOnUse">
+<stop stop-color="#C17A63"/>
+<stop offset="1" stop-color="#B65A4D"/>
+</linearGradient>
+</defs>
+</svg>

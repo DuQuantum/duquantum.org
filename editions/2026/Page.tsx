@@ -4,6 +4,7 @@ import Schedule from "./sections/Schedule";
 import Sponsors from "./sections/Sponsors";
 import Speakers from "./sections/Speakers";
 import Organizers from "./sections/Organizers";
+import Fermata from "./sections/Fermata";
 import Faq from "./sections/Faq";
 import Footer from "./sections/Footer";
 import MlhBadge from "./ui/MlhBadge";
@@ -30,6 +31,7 @@ export default function Page() {
           <Sponsors />
           <Speakers />
           <Organizers />
+          <Fermata />
           <Faq />
         </main>
         <Footer />

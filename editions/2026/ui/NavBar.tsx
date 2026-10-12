@@ -21,6 +21,7 @@ const LINKS = [
   { id: "sponsors", label: "sponsors" },
   { id: "speakers", label: "speakers" },
   { id: "organizers", label: "organizers" },
+  { id: "fermata", label: "fermata" },
   { id: "faq", label: "faq" },
   { id: "contact", label: "contact" },
 ] as const;
@@ -74,7 +75,7 @@ export default function NavBar() {
           <span className="text-dq-red">duquantum@duke</span>:~$
         </a>
 
-        <ul className="flex min-w-0 flex-1 items-center gap-x-4 overflow-x-auto min-[1400px]:flex-none [scrollbar-width:none] md:gap-x-6 [&::-webkit-scrollbar]:hidden">
+        <ul className="flex min-w-0 flex-1 items-center gap-x-4 overflow-x-auto min-[1500px]:flex-none [scrollbar-width:none] md:gap-x-6 [&::-webkit-scrollbar]:hidden">
           {LINKS.map(({ id, label }) => {
             const current = active === id;
             return (
@@ -101,8 +102,8 @@ export default function NavBar() {
         </ul>
 
         {/* Fills the bar's empty right end, taking whatever the links leave
-            (120-260px); below 1400px wide the links need the whole bar. */}
-        <Scope className="ml-auto hidden min-w-[120px] max-w-[260px] flex-1 min-[1400px]:flex" />
+            (120-260px); below 1500px wide the links need the whole bar. */}
+        <Scope className="ml-auto hidden min-w-[120px] max-w-[260px] flex-1 min-[1500px]:flex" />
       </div>
     </nav>
   );
