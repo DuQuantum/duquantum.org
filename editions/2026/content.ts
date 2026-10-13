@@ -432,23 +432,23 @@ export const speakers = [
       ". He has appointments in Electrical and Computer Engineering, Physics, and Chemistry. His research focuses on quantum computation, with emphasis on quantum error correction, quantum control, quantum computer architecture, ion trap devices, and cold molecular ions. He is a Fellow of the American Physical Society, a Kavli Fellow, an Experienced Research Fellow of the Alexander von Humboldt Foundation, and recipient of the 2020 Stansell Family Distinguished Research Award at Duke.",
     ],
   },
-  {
-    name: "Robert Calderbank",
-    photo: "/editions/2026/speakers/calderbank.jpg",
-    blurb:
-      "Charles S. Snydor Distinguished Professor of Computer Science at Duke. Member of the Duke Quantum Center.",
-    session: "Closing Keynote and Remarks",
-    link: "https://ece.duke.edu/people/robert-calderbank/",
-    bio: [
-      { text: "Robert Calderbank", bold: true },
-      " is ",
-      {
-        text: "Charles S. Snydor Distinguished Professor of Computer Science at Duke,",
-        bold: true,
-      },
-      " with appointments in Mathematics and Electrical and Computer Engineering. He was formerly Vice President for Research at AT&T. His research focuses on coding theory and wireless communication, with pioneering contributions to the theory and practice of voiceband modems, space-time coding (used in 3G, 4G, 5G), and quantum error correction (co-namesake of CSS codes). His inventions can be found in billions of devices today. Dr. Calderbank received the 2013 IEEE Hamming Medal, the 2015 Shannon Award, and the 2026 Marconi Prize. He is a member of the National Academy of Sciences, American Academy of Arts & Sciences, National Academy of Inventors, and National Academy of Engineering, as well as an IEEE Fellow, AAAS Fellow, AT&T Fellow, and AMS Fellow.",
-    ],
-  },
+  // {
+  //   name: "Robert Calderbank",
+  //   photo: "/editions/2026/speakers/calderbank.jpg",
+  //   blurb:
+  //     "Charles S. Snydor Distinguished Professor of Computer Science at Duke. Member of the Duke Quantum Center.",
+  //   session: "Closing Keynote and Remarks",
+  //   link: "https://ece.duke.edu/people/robert-calderbank/",
+  //   bio: [
+  //     { text: "Robert Calderbank", bold: true },
+  //     " is ",
+  //     {
+  //       text: "Charles S. Snydor Distinguished Professor of Computer Science at Duke,",
+  //       bold: true,
+  //     },
+  //     " with appointments in Mathematics and Electrical and Computer Engineering. He was formerly Vice President for Research at AT&T. His research focuses on coding theory and wireless communication, with pioneering contributions to the theory and practice of voiceband modems, space-time coding (used in 3G, 4G, 5G), and quantum error correction (co-namesake of CSS codes). His inventions can be found in billions of devices today. Dr. Calderbank received the 2013 IEEE Hamming Medal, the 2015 Shannon Award, and the 2026 Marconi Prize. He is a member of the National Academy of Sciences, American Academy of Arts & Sciences, National Academy of Inventors, and National Academy of Engineering, as well as an IEEE Fellow, AAAS Fellow, AT&T Fellow, and AMS Fellow.",
+  //   ],
+  // },
   {
     name: "Natalie Klco",
     photo: "/editions/2026/speakers/klco.jpg",
@@ -585,6 +585,14 @@ export const schedule = [
   },
   {
     day: "sat",
+    start: "12:00",
+    end: "13:00",
+    title: "Pasqal Intro Workshop",
+    location: "Wilkinson 021",
+    details: ["Intro to neutral atoms, optimization, and Pasqal's framework. Highly recommended for participants in the Pasqal challenge."],
+  },
+  {
+    day: "sat",
     start: "13:00",
     end: "14:00",
     title: "Sponsor Fair",
@@ -698,9 +706,7 @@ export const schedule = [
     title: "Closing Ceremony / Awards",
     location: "Wilkinson 021",
     details: [
-      "Closing Keynote and Remarks by ",
-      { text: "Robert Calderbank", bold: true },
-      ", Charles S. Snydor Distinguished Professor of Computer Science, Mathematics, and Electrical and Computer Engineering at Duke.",
+      "Live award ceremony presented by sponsor representatives, MLH, and DuQuantum organizing team, plus closing remarks from organizers.",
     ],
   },
 ] as const satisfies readonly ScheduleEvent[];
