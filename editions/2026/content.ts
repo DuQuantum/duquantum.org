@@ -622,7 +622,9 @@ export const schedule = [
     end: "15:30",
     title: "Quandela Info Session",
     location: "Wilkinson 130",
-    details: ["A representative from Quandela will lead an info session about their work."],
+    details: [
+      "Yoni Elmalem, general manager US of Quandela Federal will share about how their spin-photon SPOQC architecture can scale to reach FTQC.",
+    ],
   },
   {
     day: "sat",
